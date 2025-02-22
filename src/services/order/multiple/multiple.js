@@ -1,8 +1,8 @@
 var crypto = require("crypto");
 var { getFile } = require("./conversation/getFile");
 var { getPhone } = require("./conversation/getPhone");
-var { textForFailedAttempt } = require("../../../utils/text");
 var { getDateAndTime } = require("../services/dateAndTime");
+var { textForFailedAttempt } = require("../../../utils/text");
 var { checkOrderStatus } = require("../services/checkOrderStatus");
 var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
@@ -39,7 +39,7 @@ async function multiple(conversation, ctx) {
       }
     }
 
-    var userId = `${ctx.chat.id}`;
+    var userId = ctx.chat.id + "";
     var userName = ctx.chat.user_name || "";
     var firstName = ctx.chat.first_name || "";
     var orderTime = getDateAndTime().fullDateTime();
@@ -54,6 +54,7 @@ async function multiple(conversation, ctx) {
       phone,
       date: orderTime,
       orderStatus: "not-accepted-for-processing:0",
+      type: "multiple",
       file: {
         path: `/var/www/userFiles/${userId}/docs/${randomKey}.xlsx`,
         telegramApiFileUrl,

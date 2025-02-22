@@ -3,7 +3,7 @@ var { getFileUrl } = require("../../services/getFileURL");
 module.exports.getFile = async (ctx, conversation) => {
   try {
     await ctx.reply(
-      `Пришлите эксель таблицу с вашими товарами\n\nПолучить шаблон можно в разделе -  /Другое/Получить шаблон`,
+      "Пришлите эксель таблицу с вашими товарами\n\nПолучить шаблон можно в разделе -  /Другое/Получить шаблон",
       {
         reply_markup: { remove_keyboard: true },
       }
@@ -19,7 +19,7 @@ module.exports.getFile = async (ctx, conversation) => {
       if (validDocType) {
         var fileId = message.document.file_id;
         var fileURL = await getFileUrl(ctx, fileId);
-        return `${fileURL}::${fileId}`;
+        return fileURL + "::" + fileId;
       } else {
         await ctx.reply("Это не эксель таблица, попробуйте еще раз");
         return;

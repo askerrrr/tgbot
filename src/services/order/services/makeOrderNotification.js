@@ -1,7 +1,7 @@
 var { env } = require("../../../env");
 
 module.exports.makeOrderNotification = (order) => {
-  if (order.type) {
+  if (order.type == "single") {
     return `Новый заказ\n
     ID пользователя: ${order.userId}\nНомер телефона: ${order.phone}\n
     Ссылка на товар: ${env.main_server}/download/${order.userId}/${order.id}\n

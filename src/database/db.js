@@ -5,7 +5,7 @@ var mongodb = new MongoClient(env.mongo_url);
 
 var db = (async () => {
   await mongodb.connect();
-  console.log("mongodb started");
+  //console.log("mongodb started");
 
   return mongodb.db("database");
 })();

@@ -29,6 +29,9 @@ const shoppingSitesText =
 const textForFailedAttempt =
   "Вы превысили количество неудачных попыток. Оформление заказа завершено. Чтобы начать заново, снова нажмите 'Сделать заказ!'";
 
+var printOrderConfirmation = (orderId) =>
+  `Спасибо, скоро мы свяжемся с вами для подтверждения и оплаты заказа и начнем обрабатывать его.\nID вашего заказа : ${orderId}\n\nОтслеживайте статус заказа в разделе 'Другое => Личный кабинет => Активные заказы'\n\nТекущий статус заказа:\n\nНе взят в обработку`;
+
 module.exports = {
   linkForApp1688,
   linkForAppTaobao,
@@ -40,5 +43,6 @@ module.exports = {
   linkForAppPinduoduo,
   deliveryAddressText,
   textForFailedAttempt,
+  printOrderConfirmation,
   messageForNonReadyFunctions,
 };

@@ -7,5 +7,5 @@ module.exports.checkFileExtension = async (ctx, fileId) => {
 
   var extensionArr = ["jpg", "jpeg", "png", "webp", "svg", "gif"];
 
-  return extensionArr.includes(fileExtension) ? `${fileUrl}::${fileId}` : null;
+  return extensionArr.includes(fileExtension) ? fileUrl + "::" + fileId : null;
 };

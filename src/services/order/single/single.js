@@ -69,7 +69,7 @@ async function single(conversation, ctx) {
       }
     }
 
-    var userId = `${ctx.chat.id}`;
+    var userId = ctx.chat.id + "";
     var userName = ctx.chat.user_name || "";
     var firstName = ctx.chat.first_name || "";
     var orderTime = getDateAndTime().fullDateTime();
