@@ -1,4 +1,4 @@
-var { env } = require("../../../env");
+var { env } = require("../../env");
 
 module.exports.guideFor1688 = async (bot) => {
   var guideURL = `Посмотреть гайд на youtube ${env.guideURL1688}`;

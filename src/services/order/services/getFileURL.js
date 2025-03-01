@@ -1,4 +1,4 @@
-var { env } = require("../../../../env");
+var { env } = require("../../../env");
 
 module.exports.getFileUrl = async (ctx, fileId) => {
   try {

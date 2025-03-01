@@ -1,4 +1,4 @@
-var { env } = require("../../../env");
+var { env } = require("../../env");
 var { db } = require("../db");
 
 module.exports.updateOrderStatus = async (ctx, order) => {

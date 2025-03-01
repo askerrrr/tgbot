@@ -1,4 +1,4 @@
-var { env } = require("../../../env");
+var { env } = require("../../env");
 
 module.exports.guideForTaobao = async (bot) => {
   var guideURL = `Посмотреть гайд на youtube ${env.guideURLTaobao}`;

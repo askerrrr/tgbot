@@ -1,5 +1,5 @@
 var JWT = require("jsonwebtoken");
-var { env } = require("../../../../env");
+var { env } = require("../../../env");
 var { sendOrderToAdmin } = require("./sendOrderToAdmin");
 var { addNewOrder } = require("../../../database/services/addNewOrder");
 

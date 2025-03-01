@@ -1,5 +1,5 @@
 var JWT = require("jsonwebtoken");
-var { env } = require("../../../env");
+var { env } = require("../../env");
 
 module.exports.getOrders = async (userId, ctx) => {
   var response = await fetch(env.bot_api_status + "/" + userId, {

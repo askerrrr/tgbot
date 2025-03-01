@@ -1,4 +1,4 @@
-var { env } = require("../../../../env");
+var { env } = require("../../../env");
 var { getCNYValuteValue } = require("./getCNYValuteValue");
 
 module.exports.convertYuanToRubles = async (val) => {

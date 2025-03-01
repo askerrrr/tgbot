@@ -1,4 +1,4 @@
-var { env } = require("../../../../env");
+var { env } = require("../../../env");
 var { makeOrderNotification } = require("./makeOrderNotification");
 
 module.exports.sendOrderToAdmin = async (ctx, order, fileId) => {

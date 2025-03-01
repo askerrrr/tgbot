@@ -3,9 +3,7 @@ var { Bot } = require("grammy");
 var express = require("express");
 var { deleteOrder } = require("./database/services/deleteOrder");
 var { statusTranslate } = require("./services/different/statusTranslate");
-var {
-  updateOrderStatus,
-} = require("./database/services/updateOrderStatus");
+var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 
 var app = express();
 var bot = new Bot(env.bot_token);
@@ -84,5 +82,5 @@ app.delete("/", async (req, res) => {
 });
 
 app.listen(env.PORT, env.HOST, () =>
-  console.log(`The server running on ${env.HOST}:${env.PORT}`)
+  console.log("The server running on " + env.HOST + ":" + env.PORT)
 );

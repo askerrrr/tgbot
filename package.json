@@ -4,8 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node --watch bot.js",
-    "test": "node --watch app.js"
+    "start": "node --watch src/bot.js & node --watch src/app.js"
   },
   "keywords": [],
   "author": "",

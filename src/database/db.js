@@ -1,4 +1,4 @@
-var { env } = require("../../env");
+var { env } = require("../env");
 var MongoClient = require("mongodb").MongoClient;
 
 var mongodb = new MongoClient(env.mongo_url);

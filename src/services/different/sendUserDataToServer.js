@@ -1,5 +1,5 @@
 var JWT = require("jsonwebtoken");
-var { env } = require("../../../env");
+var { env } = require("../../env");
 var { addNewUser } = require("../../database/services/addNewUser");
 
 module.exports.sendUserDataToServer = async (userData) => {
