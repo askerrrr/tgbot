@@ -1,4 +1,4 @@
-var { sendOrderToServer } = require("./sendOrderToServer");
+const {} = require("../../../database/services/");
 
 module.exports.checkOrderStatus = async (
   ctx,
@@ -19,7 +19,6 @@ module.exports.checkOrderStatus = async (
           },
         }
       );
-      return await sendOrderToServer(order, ctx, fileId);
     } else if (status.msg.text == "Нет, тут ошибка, я хочу исправить данные") {
       await ctx.reply("Давайте исправим", {
         reply_markup: {
