@@ -10,12 +10,12 @@ var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
 async function single(conversation, ctx) {
   try {
-    let itemUrl, imageData, description, phone;
+    var itemUrl, imageData, description, phone;
 
-    let countForPhone = 0;
-    let countForItemUrl = 0;
-    let countForImageData = 0;
-    let countForDescription = 0;
+    var countForPhone = 0;
+    var countForItemUrl = 0;
+    var countForImageData = 0;
+    var countForDescription = 0;
 
     while (!itemUrl) {
       itemUrl = await getUrl(ctx, conversation);
@@ -75,14 +75,7 @@ async function single(conversation, ctx) {
     var orderTime = getDateAndTime().fullDateTime();
     var randomKey = crypto.randomInt(10, 100000000000) + "0";
     var [telegramApiFileUrl, imageId] = imageData.split("::");
-    var path =
-      "/var/www/userFiles/" +
-      userId +
-      "/" +
-      "images" +
-      "/" +
-      randomKey +
-      ".jpg";
+    var path = "/var/www/userFiles/" + userId + "/images/" + randomKey + ".jpg";
 
     var order = {
       id: randomKey,

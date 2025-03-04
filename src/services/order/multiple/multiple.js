@@ -45,8 +45,7 @@ async function multiple(conversation, ctx) {
     var orderTime = getDateAndTime().fullDateTime();
     var randomKey = crypto.randomInt(10, 100000000000) + "0";
     var [telegramApiFileUrl, fileId] = fileData.split("::");
-    var path =
-      "/var/www/userFiles/" + userId + "/" + docs + "/" + randomKey + ".xlsx";
+    var path = "/var/www/userFiles/" + userId + "/docs/" + randomKey + ".xlsx";
 
     var order = {
       id: randomKey,
@@ -55,6 +54,7 @@ async function multiple(conversation, ctx) {
       userName,
       phone,
       date: orderTime,
+      type: "multiple",
       orderStatus: "not-accepted-for-processing:0",
       file: {
         path,
@@ -63,7 +63,7 @@ async function multiple(conversation, ctx) {
     };
 
     await returnOrderToUser(ctx, phone, fileId);
-    await checkOrderStatus(ctx, conversation, order, fileId, multiple);
+    await checkOrderStatus(ctx, order, fileId, multiple, conversation);
   } catch (err) {
     console.log(err);
   }

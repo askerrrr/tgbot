@@ -1,25 +1,28 @@
+var { sendOrderToAdmin } = require("./sendOrderToAdmin");
 var { sendOrderToServer } = require("./sendOrderToServer");
+var { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
+var { addNewOrder } = require("../../../database/services/addNewOrder");
 
 module.exports.checkOrderStatus = async (
   ctx,
-  conversation,
   order,
   fileId,
-  orderFunc
+  orderFunc,
+  conversation
 ) => {
   try {
     var status = await conversation.wait();
 
     if (status.msg.text == "Да, все правильно!") {
-      await ctx.reply(
-        `Спасибо, скоро мы свяжемся с вами для подтверждения и оплаты заказа и начнем обрабатывать его.\nID вашего заказа : ${order.id}\n\nОтслеживайте статус заказа в разделе 'Другое => Личный кабинет => Активные заказы'\n\nТекущий статус заказа:\n\nНе взят в обработку`,
-        {
-          reply_markup: {
-            remove_keyboard: true,
-          },
-        }
-      );
-      return await sendOrderToServer(order, ctx, fileId);
+      await ctx.reply(showOrderSuccessMessage(order.id), {
+        reply_markup: {
+          remove_keyboard: true,
+        },
+      });
+
+      await sendOrderToServer(order, ctx);
+      await addNewOrder(order);
+      await sendOrderToAdmin(ctx, order, fileId);
     } else if (status.msg.text == "Нет, тут ошибка, я хочу исправить данные") {
       await ctx.reply("Давайте исправим", {
         reply_markup: {
@@ -27,7 +30,7 @@ module.exports.checkOrderStatus = async (
         },
       });
 
-      return await orderFunc(conversation, ctx);
+      await orderFunc(conversation, ctx);
     }
   } catch (err) {
     console.log(err);
