@@ -15,14 +15,8 @@ module.exports.sendUserDataToServer = async (userData) => {
 
     if (!response.ok) {
       var err = await response.text();
+      await reportError(userData.userId, err, "Отправка данных о пользователе");
 
-      console.log("err: ", err);
-      await reportError(
-        userData.userId,
-        err,
-        "Отправка данных о пользователе",
-        null
-      );
       return;
     }
 

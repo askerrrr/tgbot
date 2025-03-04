@@ -1,4 +1,6 @@
 var { env } = require("../../../env");
+var { reportError } = require("../../../errReportBot");
+var { errNotification } = require("../../../utils/text");
 
 module.exports.sendOrderToServer = async (order, ctx) => {
   try {
@@ -13,10 +15,9 @@ module.exports.sendOrderToServer = async (order, ctx) => {
 
     if (!response.ok) {
       var err = await response.text();
-      console.log("Ошибка при отправлении заказа", err);
-      await ctx.reply(
-        "Произошла ошибка при формировании заказа, попробуйте еще раз"
-      );
+
+      await reportError(order.useId, err, "Ошибка при отправлении заказа");
+      await ctx.reply(errNotification);
       return;
     }
   } catch (err) {

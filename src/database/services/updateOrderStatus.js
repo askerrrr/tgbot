@@ -1,7 +1,7 @@
-var { env } = require("../../env");
 var { db } = require("../db");
+var { reportError } = require("../../errReportBot");
 
-module.exports.updateOrderStatus = async (ctx, order) => {
+module.exports.updateOrderStatus = async (order) => {
   try {
     var collection = (await db).collection("users");
     var updatedStatus = await collection.updateOne(
@@ -12,8 +12,8 @@ module.exports.updateOrderStatus = async (ctx, order) => {
     );
 
     if (!updatedStatus) {
-      console.log("Ошибка при обновлении статуса...");
-      await env.sendErrToAdmin(ctx, "Ошибка при обновлении статуса", null);
+      await reportError(order.userId, "Ошибка при обновлении статуса в БД");
+
       return;
     }
 

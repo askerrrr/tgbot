@@ -17,7 +17,7 @@ module.exports.getCompletedOrders = async (bot) => {
       if (!currentCompleted || currentCompleted.length < 1)
         return await ctx.reply("Завершенных заказов не найдено");
 
-      var orders = await getOrders(userId, ctx);
+      var orders = await getOrders(userId);
       var completed = orders?.completedOrders;
 
       if (!orders || completed.length < 1)

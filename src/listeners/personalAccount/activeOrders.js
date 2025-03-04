@@ -17,7 +17,7 @@ module.exports.getActiveOrders = async (bot) => {
       if (!currentActive || currentActive.length < 1)
         return await ctx.reply("Активных заказов не найдено");
 
-      var orders = await getOrders(userId, ctx);
+      var orders = await getOrders(userId);
       var active = orders?.activeOrders;
 
       if (!orders || active.length < 1)

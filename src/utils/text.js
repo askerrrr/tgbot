@@ -29,7 +29,11 @@ const shoppingSitesText =
 const textForFailedAttempt =
   "Вы превысили количество неудачных попыток. Оформление заказа завершено. Чтобы начать заново, снова нажмите 'Сделать заказ!'";
 
+const errNotification =
+  "Произошла ошибка при формировании заказа, попробуйте еще раз.\nЯ уже уведомил моего администратора об ошибке";
+
 module.exports = {
+  errNotification,
   linkForApp1688,
   linkForAppTaobao,
   linkForAppPoizon,
@@ -40,5 +44,6 @@ module.exports = {
   linkForAppPinduoduo,
   deliveryAddressText,
   textForFailedAttempt,
+
   messageForNonReadyFunctions,
 };

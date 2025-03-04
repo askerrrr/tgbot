@@ -1,6 +1,7 @@
 var { env } = require("../../env");
+var { reportError } = require("../../errReportBot");
 
-module.exports.getOrders = async (userId, ctx) => {
+module.exports.getOrders = async (userId) => {
   var response = await fetch(env.bot_api_status + "/" + userId, {
     method: "GET",
     headers: {
@@ -11,8 +12,7 @@ module.exports.getOrders = async (userId, ctx) => {
 
   if (!response.ok) {
     var err = await response.text();
-    await env.sendErrToAdmin(ctx, err, "Запрос на обновление статуса");
-
+    await reportError(userId, err, "Запрос на обновление статуса");
     return;
   }
 
