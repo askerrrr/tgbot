@@ -1,4 +1,5 @@
-var { greetUser } = require("../services/different/greetUser");
+const { addNewUser } = require("../database/services/addNewUser");
+const { greetUser } = require("../services/different/greetUser");
 
 module.exports.chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
@@ -15,5 +16,7 @@ module.exports.chatMember = async (bot) => {
       userName: chatMember.user.user_name || "",
       orders: [],
     };
+
+    await addNewUser(newUser);
   });
 };

@@ -1,17 +1,11 @@
 const {
-  createItemStatusCollection,
-} = require("../../../database/services/createItemStatusCollection");
+  createItemCollection,
+} = require("../../../database/services/createItemCollection");
 const { downloadAndSaveFile } = require("./downloadAndSaveFile");
 const { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
 const { createNewOrder } = require("../../../database/services/createNewOrder");
 
-module.exports.checkOrderStatus = async (
-  ctx,
-  conversation,
-  order,
-  fileId,
-  orderFunc
-) => {
+module.exports.checkOrderStatus = async (ctx, order, fileId, orderFunc) => {
   try {
     var status = await conversation.wait();
 
@@ -23,13 +17,8 @@ module.exports.checkOrderStatus = async (
       });
 
       await createNewOrder(order);
-      await downloadAndSaveFile(
-        order.userId,
-        fileId,
-        order.file.telegramApiFileUrl,
-        order
-      );
-      await createItemStatusCollection(order);
+      await downloadAndSaveFile(fileId, order);
+      await createItemCollection(order);
     } else if (status.msg.text == "Нет, тут ошибка, я хочу исправить данные") {
       await ctx.reply("Давайте исправим", {
         reply_markup: {
@@ -37,7 +26,7 @@ module.exports.checkOrderStatus = async (
         },
       });
 
-      return await orderFunc(conversation, ctx);
+      return await orderFunc;
     }
   } catch (err) {
     console.log(err);

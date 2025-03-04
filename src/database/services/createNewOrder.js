@@ -19,7 +19,7 @@ module.exports.createNewOrder = async (order) => {
 
       if (!result) return;
 
-      return await collection.updateOne(
+      await collection.updateOne(
         { userId: order.userId },
         { $push: { orders: { order } } }
       );
