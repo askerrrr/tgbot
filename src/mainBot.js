@@ -6,7 +6,7 @@ var { setCommands } = require("./commands/setCommands.js");
 var { errorHandler } = require("./middleware/errorHandler.js");
 var { middlewareForConversations } = require("./middleware/middleware.js");
 
-var bot = new Bot(env.bot_token);
+var bot = new Bot(env.main_bot_token);
 
 setCommands(bot);
 bot.hears("/menu", mainMenu);

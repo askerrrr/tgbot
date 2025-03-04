@@ -6,7 +6,9 @@ module.exports.getFileId = async (bot) => {
     var fileId = photo[photo.length - 1].file_id;
     var fileLink = await ctx.api.getFile(fileId);
     var filePath = fileLink.file_path;
-    var fileUrl = `https://api.telegram.org/file/bot${env.bot_token}/${filePath}`;
-    await ctx.reply(`${fileUrl}`);
+    var fileUrl =
+      "https://api.telegram.org/file/bot" + env.main_bot_token + "/" + filePath;
+
+    await ctx.reply(fileUrl);
   });
 };

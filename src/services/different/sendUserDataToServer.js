@@ -1,4 +1,5 @@
 var { env } = require("../../env");
+var { reportError } = require("../../errReportBot");
 var { addNewUser } = require("../../database/services/addNewUser");
 
 module.exports.sendUserDataToServer = async (userData) => {
@@ -14,7 +15,14 @@ module.exports.sendUserDataToServer = async (userData) => {
 
     if (!response.ok) {
       var err = await response.text();
-      console.log(err);
+
+      console.log("err: ", err);
+      await reportError(
+        null,
+        userData.userId,
+        err,
+        "Отправка данных о пользователе"
+      );
       return;
     }
 
