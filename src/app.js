@@ -28,12 +28,15 @@ app.use((req, res, next) => {
 
 app.patch("/", async (req, res) => {
   try {
-    var authHeader = req.headers.authorization;
+    var authHeader = req.headers?.authorization;
 
     if (!authHeader) return res.sendStatus(401);
 
-    if (authHeader.split(" ")[1] !== env.bearer_token)
+    var [type, token] = authHeader.split(" ");
+
+    if (type !== "Bearer" && token !== env.bot_secret_key) {
       return res.sendStatus(401);
+    }
 
     var requestPayload = req.body;
 
@@ -63,11 +66,11 @@ app.delete("/", async (req, res) => {
   try {
     var authHeader = req.headers.authorization;
 
-    if (!authHeader) return res.sendStatus(401);
+    var [type, token] = authHeader.split(" ");
 
-    if (authHeader.split(" ")[1] !== env.bearer_token)
+    if (type !== "Bearer" && token !== env.bot_secret_key) {
       return res.sendStatus(401);
-
+    }
     var requestPayload = req.body;
     var userId = requestPayload.userId;
     var orderId = requestPayload.orderId;

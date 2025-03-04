@@ -1,4 +1,3 @@
-var JWT = require("jsonwebtoken");
 var { env } = require("../../env");
 var { addNewUser } = require("../../database/services/addNewUser");
 
@@ -9,9 +8,7 @@ module.exports.sendUserDataToServer = async (userData) => {
       body: JSON.stringify(userData),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JWT.sign(env.payload, env.bot_secret_key, {
-          expiresIn: "5m",
-        })}`,
+        Authorization: "Bearer " + env.bot_secret_key,
       },
     });
 
@@ -26,6 +23,4 @@ module.exports.sendUserDataToServer = async (userData) => {
     console.error("Failed to send user data to server:", err);
     throw err;
   }
-
-  //экспорт в src/chatMember/chatMember.js
 };

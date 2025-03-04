@@ -1,4 +1,3 @@
-var JWT = require("jsonwebtoken");
 var { env } = require("../../../env");
 
 module.exports.sendOrderToServer = async (order, ctx) => {
@@ -8,9 +7,7 @@ module.exports.sendOrderToServer = async (order, ctx) => {
       body: JSON.stringify(order),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JWT.sign(env.payload, env.bot_secret_key, {
-          expiresIn: "5m",
-        })}`,
+        Authorization: "Bearer " + env.bot_secret_key,
       },
     });
 
