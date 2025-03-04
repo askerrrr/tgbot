@@ -1,13 +1,13 @@
 var { db } = require("../db");
 
-module.exports.addNewOrder = async (order) => {
+module.exports.createNewOrder = async (order) => {
   try {
     var collection = (await db).collection("users");
-    var existingDocument = await collection.findOne({
+    var document = await collection.findOne({
       userId: order.userId,
     });
 
-    if (!existingDocument) {
+    if (!document) {
       var newUser = {
         userId: order.userId,
         firstName: order.firstName,

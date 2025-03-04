@@ -1,4 +1,9 @@
-const {} = require("../../../database/services/");
+const {
+  createItemStatusCollection,
+} = require("../../../database/services/createItemStatusCollection");
+const { downloadAndSaveFile } = require("./downloadAndSaveFile");
+const { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
+const { createNewOrder } = require("../../../database/services/createNewOrder");
 
 module.exports.checkOrderStatus = async (
   ctx,
@@ -11,14 +16,20 @@ module.exports.checkOrderStatus = async (
     var status = await conversation.wait();
 
     if (status.msg.text == "Да, все правильно!") {
-      await ctx.reply(
-        `Спасибо, скоро мы свяжемся с вами для подтверждения и оплаты заказа и начнем обрабатывать его.\nID вашего заказа : ${order.id}\n\nОтслеживайте статус заказа в разделе 'Другое => Личный кабинет => Активные заказы'\n\nТекущий статус заказа:\n\nНе взят в обработку`,
-        {
-          reply_markup: {
-            remove_keyboard: true,
-          },
-        }
+      await ctx.reply(showOrderSuccessMessage(order.id), {
+        reply_markup: {
+          remove_keyboard: true,
+        },
+      });
+
+      await createNewOrder(order);
+      await downloadAndSaveFile(
+        order.userId,
+        fileId,
+        order.file.telegramApiFileUrl,
+        order
       );
+      await createItemStatusCollection(order);
     } else if (status.msg.text == "Нет, тут ошибка, я хочу исправить данные") {
       await ctx.reply("Давайте исправим", {
         reply_markup: {
