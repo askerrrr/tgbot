@@ -18,10 +18,10 @@ module.exports.sendUserDataToServer = async (userData) => {
 
       console.log("err: ", err);
       await reportError(
-        null,
         userData.userId,
         err,
-        "Отправка данных о пользователе"
+        "Отправка данных о пользователе",
+        null
       );
       return;
     }

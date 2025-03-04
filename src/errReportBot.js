@@ -7,10 +7,10 @@ var errorBot = new Bot(env.err_bot_token);
 errorBot.hears("a", async (ctx) => {
   await ctx.reply("asfsdf");
 });
-module.exports.reportError = async (ctx, userId, err, location) => {
+module.exports.reportError = async (userId, err, location, chatId) => {
   var errMessage =
     "Ошибка у пользователя " +
-    (ctx.chat.id || userId) +
+    (userId ?? chatId) +
     "Ошибка: " +
     err +
     "\n\nМесто ошибки: " +
