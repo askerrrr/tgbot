@@ -18,6 +18,7 @@ module.exports.getActiveOrders = async (bot) => {
     var orders = await getOrders(userId);
     var active = orders?.activeOrders;
 
+    console.log(active);
     if (!orders || active.length < 1) {
       await currentActive.forEach(
         async (orders) => await ctx.reply(showOrder(orders.order, userId))

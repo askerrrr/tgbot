@@ -2,7 +2,9 @@ var { env } = require("../../env");
 var { reportError } = require("../../errReportBot");
 
 module.exports.getOrders = async (userId) => {
-  var response = await fetch(env.bot_api_status + "/" + userId, {
+  var url = env.bot_api_status + "/" + userId;
+
+  var response = await fetch(url, {
     method: "GET",
     headers: {
       Accept: "application/json",

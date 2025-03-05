@@ -6,7 +6,7 @@ var { statusTranslate } = require("./services/different/statusTranslate");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 
 var app = express();
-var bot = new Bot(env.bot_token);
+var bot = new Bot(env.main_bot_token);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
