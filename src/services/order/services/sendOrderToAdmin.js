@@ -5,7 +5,7 @@ module.exports.sendOrderToAdmin = async (ctx, order, fileId) => {
   try {
     var messageToAdmin = makeOrderNotification(order);
 
-    if (order?.type == "single") {
+    if (order.type == "single") {
       await ctx.api.sendMessage(env.admin_id, messageToAdmin);
       await ctx.api.sendPhoto(env.admin_id, fileId);
     } else {
