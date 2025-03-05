@@ -19,8 +19,9 @@ module.exports.getDateAndTime = () => {
   var y = date.getFullYear();
 
   return {
-    time: () => `${h}:${m}:${s}`,
-    date: () => `${d}.${month}.${y}`,
-    fullDateTime: () => `${d}.${month}.${y} - ${h}:${m}:${s} `,
+    time: () => h + ":" + m + ":" + s,
+    date: () => d + "." + month + "." + y,
+    fullDateTime: () =>
+      h + ":" + m + ":" + s + "  " + d + "." + month + "." + y,
   };
 };
