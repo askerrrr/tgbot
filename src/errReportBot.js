@@ -5,9 +5,6 @@ var { getDateAndTime } = require("./services/order/services/dateAndTime.js");
 
 var errorBot = new Bot(env.err_bot_token);
 
-errorBot.hears("a", async (ctx) => {
-  await ctx.reply("asfsdf");
-});
 module.exports.reportError = async (userId, err, location) => {
   var errReport =
     "Ошибка у пользователя: " +
@@ -18,6 +15,7 @@ module.exports.reportError = async (userId, err, location) => {
     location +
     "\n\nВремя ошибки: " +
     getDateAndTime().fullDateTime();
+
   await errorBot.api.sendMessage(env.admin_id_2, errReport);
 };
 
