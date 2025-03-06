@@ -1,6 +1,7 @@
 var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
+var { reportError } = require("./errReportBot");
 var { deleteOrder } = require("./database/services/deleteOrder");
 var { statusTranslate } = require("./services/different/statusTranslate");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
@@ -47,7 +48,7 @@ app.patch("/", async (req, res) => {
     var updatedStatus = await updateOrderStatus(userId, orderId, status);
 
     if (!updatedStatus) {
-      console.log("Ошибка при обновлении статуса");
+      await reportError(userId, err, "Попытка обновления статуса заказа");
       return;
     }
 
@@ -57,7 +58,7 @@ app.patch("/", async (req, res) => {
 
     await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
   } catch (err) {
-    console.log(err);
+    await reportError(userId, err, "Попытка обновления статуса заказа");
     return res.sendStatus(500);
   }
 });
@@ -79,7 +80,7 @@ app.delete("/", async (req, res) => {
       .then(() => res.sendStatus(200))
       .catch(() => res.sendStatus(404));
   } catch (err) {
-    console.log(err);
+    await reportError(userId, err, "Запрос на удаление заказа");
     return res.sendStatus(500);
   }
 });

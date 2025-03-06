@@ -1,4 +1,5 @@
 var { checkUrl } = require("../../services/checkUrl");
+var { reportError } = require("../../../../errReportBot");
 
 module.exports.getUrl = async (ctx, conversation) => {
   try {
@@ -19,6 +20,6 @@ module.exports.getUrl = async (ctx, conversation) => {
 
     return validUrl;
   } catch (err) {
-    console.log(err);
+    await reportError(ctx.chat.id, err, "Заказ товаров, получение ссылки");
   }
 };

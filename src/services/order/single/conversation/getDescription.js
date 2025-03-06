@@ -1,3 +1,5 @@
+var { reportError } = require("../../../../errReportBot");
+
 module.exports.getDescriprion = async (ctx, conversation) => {
   try {
     await ctx.reply(
@@ -13,6 +15,6 @@ module.exports.getDescriprion = async (ctx, conversation) => {
 
     return +qty > 0 && +qty < 1e4 && size.length < 40 ? { qty, size } : null;
   } catch (err) {
-    console.log(err);
+    await reportError(ctx.chat.id, err, "Заказ товаров, получение описания");
   }
 };

@@ -15,6 +15,6 @@ module.exports.getPhone = async (ctx, conversation) => {
       return;
     }
   } catch (err) {
-    console.log(err);
+    reportError(ctx.chat.id, err, "Заказ товара, получение телефона (single)");
   }
 };

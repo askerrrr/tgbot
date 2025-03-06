@@ -1,3 +1,4 @@
+var { reportError } = require("../../../../errReportBot");
 var { getFileUrl } = require("../../services/getFileURL");
 
 module.exports.getFile = async (ctx, conversation) => {
@@ -29,7 +30,7 @@ module.exports.getFile = async (ctx, conversation) => {
     await ctx.reply("Это вообще не документ...");
     return;
   } catch (err) {
-    console.log(err);
+    await reportError(ctx.chat.id, err, "Заказ товаров, получение эксель");
   }
 };
 
