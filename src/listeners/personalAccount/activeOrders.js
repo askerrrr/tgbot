@@ -1,8 +1,10 @@
 var { showOrder } = require("./showOrderContent");
 var { findOrder } = require("../../database/services/findOrder");
 var { addOrders } = require("../../database/services/addOrders");
-var { getOrders } = require("../../services/different/getOrders");
 var { addNewUser } = require("../../database/services/addNewUser");
+var {
+  getOrdersFromMainServer,
+} = require("../../services/different/getOrdersFromMainServer");
 
 module.exports.getActiveOrders = async (bot) => {
   bot.hears("Активные заказы", async (ctx) => {
@@ -12,15 +14,13 @@ module.exports.getActiveOrders = async (bot) => {
 
     if (activeOrders?.length) {
       await activeOrders.forEach(
-        async (orders) => await ctx.reply(showOrder(orders.order, userId))
+        async (orders) => await ctx.reply(showOrder(orders.order))
       );
-
-      return;
     } else {
-      var requestedOrders = await getOrders(userId);
+      var requestedOrders = await getOrdersFromMainServer(userId);
       var requestedActiveOrders = requestedOrders?.activeOrders;
 
-      if (requestedActiveOrders.length) {
+      if (requestedActiveOrders?.length) {
         requestedActiveOrders.forEach(
           async (order) => await ctx.reply(showOrder(order))
         );
