@@ -18,6 +18,4 @@ module.exports.sendUserDataToServer = async (userData) => {
 
     return;
   }
-
-  await addNewUser(userData);
 };

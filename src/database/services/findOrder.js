@@ -3,7 +3,7 @@ var { db } = require("../db");
 module.exports.findOrder = async (userId) => {
   try {
     var collection = (await db).collection("users");
-    var result = await collection.findOne({ userId: userId });
+    var result = await collection.findOne({ userId });
 
     return {
       active: async () =>

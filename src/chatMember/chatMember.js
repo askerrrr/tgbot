@@ -2,27 +2,22 @@ var {
   sendUserDataToServer,
 } = require("../services/different/sendUserDataToServer");
 var { greetUser } = require("../services/different/greetUser");
+var { addNewUser } = require("../database/services/addNewUser");
 
 module.exports.chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
-    try {
-      await ctx.reply(greetUser(ctx.chat.id, ctx.from.first_name));
+    await ctx.reply(greetUser(ctx.chat.id, ctx.from.first_name));
 
-      var chatMember = await ctx.chatMembers.getChatMember(
-        ctx.chat.id,
-        ctx.from.id
-      );
+    var chatMember = await ctx.chatMembers.getChatMember(
+      ctx.chat.id,
+      ctx.from.id
+    );
 
-      var newUser = {
-        userId: chatMember.user.id + "",
-        firstName: chatMember.user.first_name || "",
-        userName: chatMember.user.user_name || "",
-        orders: [],
-      };
+    var userId = chatMember.user.id + "";
+    var firstName = chatMember.user.first_name || "";
+    var userName = chatMember.user.user_name || "";
 
-      await sendUserDataToServer(newUser);
-    } catch (err) {
-      console.log(err.message);
-    }
+    await addNewUser(userId, firstName, userName, []);
+    await sendUserDataToServer({ userId, firstName, userName, orders: [] });
   });
 };

@@ -2,6 +2,8 @@ var { db } = require("../db");
 
 module.exports.addNewOrder = async (order) => {
   try {
+    delete order.file;
+
     var collection = (await db).collection("users");
     var existingDocument = await collection.findOne({
       userId: order.userId,

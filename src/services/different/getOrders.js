@@ -18,6 +18,10 @@ module.exports.getOrders = async (userId) => {
     return;
   }
 
+  if (response.status == 404) {
+    return;
+  }
+
   var json = await response.json();
 
   return json;
