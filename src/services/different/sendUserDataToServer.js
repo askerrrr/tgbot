@@ -1,6 +1,5 @@
 var { env } = require("../../env");
 var { reportError } = require("../../errReportBot");
-var { addNewUser } = require("../../database/services/addNewUser");
 
 module.exports.sendUserDataToServer = async (userData) => {
   var response = await fetch(env.bot_api_users, {

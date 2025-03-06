@@ -23,8 +23,8 @@ module.exports.getCompletedOrders = async (bot) => {
       var requestedCompletedOrders = requestedOrders?.completedOrders;
 
       if (requestedCompletedOrders?.length) {
-        requestedCompletedOrders.forEach(async (order) =>
-          ctx.reply(showOrder(order))
+        requestedCompletedOrders.forEach(
+          async (order) => await ctx.reply(showOrder(order))
         );
 
         var data = requestedCompletedOrders[0];

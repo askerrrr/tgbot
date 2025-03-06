@@ -5,6 +5,4 @@ module.exports.showOrder = (order) =>
     order.id
   }\nНомер телефона : ${order.phone}\nВремя заказа ${
     order.date
-  }\nСтатус заказа : ${statusTranslate(
-    order.orderStatus
-  )}\n\nПосмотреть содержимое заказа можно по ссылке\n`;
+  }\nСтатус заказа : ${statusTranslate(order.orderStatus)}`;
