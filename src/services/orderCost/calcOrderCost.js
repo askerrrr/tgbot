@@ -17,10 +17,10 @@ async function calcOrderCost(conversation, ctx) {
       `Боюсь, что у вас нет таких денег)))\nВведите числовое значение, которое больше 0`
     );
 
-    return await calcOrderCost(conversation, ctx);
+    await calcOrderCost(conversation, ctx);
   } else {
     await ctx.reply(`Введите числовое значение, которое больше 0`);
-    return await calcOrderCost(conversation, ctx);
+    await calcOrderCost(conversation, ctx);
   }
 }
 

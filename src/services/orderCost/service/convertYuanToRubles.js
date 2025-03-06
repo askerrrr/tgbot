@@ -1,4 +1,5 @@
 var { env } = require("../../../env");
+var { shorteningString } = require("./shorteningString");
 var { getCNYValuteValue } = require("./getCNYValuteValue");
 
 module.exports.convertYuanToRubles = async (val) => {
@@ -7,7 +8,7 @@ module.exports.convertYuanToRubles = async (val) => {
   var result =
     (valuteValue + env.yuanCommission) * val * (1 + env.sellerCommission) + "";
 
-  var [a, b] = result.split(".");
+  var num = shorteningString(result);
 
-  return a + "." + b.slice(0, 2);
+  return num;
 };
