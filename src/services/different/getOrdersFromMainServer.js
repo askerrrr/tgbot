@@ -12,13 +12,13 @@ module.exports.getOrdersFromMainServer = async (userId) => {
     },
   });
 
-  if (!response.ok) {
-    var err = await response.text();
-    await reportError(userId, err, "Запрос на обновление статуса");
+  if (response.status == 404) {
     return;
   }
 
-  if (response.status == 404) {
+  if (!response.ok) {
+    var err = await response.text();
+    await reportError(userId, err, "Запрос на получение заказов");
     return;
   }
 
