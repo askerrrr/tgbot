@@ -4,7 +4,6 @@ var { errorHandler } = require("./middleware/errorHandler.js");
 var { getDateAndTime } = require("./services/order/services/dateAndTime.js");
 
 var errorBot = new Bot(env.err_bot_token);
-errorBot.hears("a", async (ctx) => await ctx.reply("a"));
 
 module.exports.reportError = async (userId, err, location) => {
   var errReport =
@@ -22,4 +21,4 @@ module.exports.reportError = async (userId, err, location) => {
 
 errorBot.catch(errorHandler);
 
-//errorBot.start();
+errorBot.start();
