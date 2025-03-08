@@ -14,5 +14,5 @@ module.exports.deleteOrder = async (userId, orderId) => {
     }
   );
 
-  return result.modifiedCount == 0 ? false : result;
+  return result.modifiedCount;
 };

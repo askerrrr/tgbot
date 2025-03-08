@@ -56,10 +56,10 @@ app.patch("/", async (req, res) => {
       status
     )}`;
 
-    await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
+    await bot.api.sendMessage(userId, message);
+    res.sendStatus(200);
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
-    return res.sendStatus(500);
   }
 });
 
@@ -76,12 +76,11 @@ app.delete("/", async (req, res) => {
     var userId = requestPayload.userId;
     var orderId = requestPayload.orderId;
 
-    await deleteOrder(userId, orderId)
-      .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(404));
+    var isDeletedFromDB = await deleteOrder(userId, orderId);
+
+    return isDeletedFromDB ? res.sendStatus(200) : res.sendStatus(304);
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
-    return res.sendStatus(500);
   }
 });
 

@@ -10,11 +10,7 @@ module.exports.updateOrderStatus = async (order) => {
     }
   );
 
-  if (!updatedStatus) {
-    await reportError(order.userId, "Ошибка при обновлении статуса в БД");
-
-    return;
-  }
-
-  return updatedStatus;
+  return updatedStatus.modifiedCount
+    ? true
+    : await reportError(order.userId, "Ошибка при обновлении статуса в БД");
 };
