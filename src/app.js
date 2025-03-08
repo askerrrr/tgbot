@@ -2,6 +2,7 @@ var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
 var { reportError } = require("./errReportBot");
+var { deleteUser } = require("./database/services/deleteUser");
 var { deleteOrder } = require("./database/services/deleteOrder");
 var { statusTranslate } = require("./services/different/statusTranslate");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
@@ -63,7 +64,7 @@ app.patch("/", async (req, res) => {
   }
 });
 
-app.delete("/", async (req, res) => {
+app.delete("/order", async (req, res) => {
   try {
     var authHeader = req.headers.authorization;
 
@@ -77,6 +78,27 @@ app.delete("/", async (req, res) => {
     var orderId = requestPayload.orderId;
 
     var isDeletedFromDB = await deleteOrder(userId, orderId);
+
+    return isDeletedFromDB ? res.sendStatus(200) : res.sendStatus(304);
+  } catch (err) {
+    await reportError(userId, err, "Запрос на удаление заказа");
+  }
+});
+
+app.delete("/user", async (req, res) => {
+  try {
+    var authHeader = req.headers.authorization;
+
+    var [type, token] = authHeader.split(" ");
+
+    if (type !== "Bearer" && token !== env.bot_secret_key) {
+      return res.sendStatus(401);
+    }
+
+    var requestPayload = req.body;
+    var userId = requestPayload.userId;
+
+    var isDeletedFromDB = await deleteUser(userId);
 
     return isDeletedFromDB ? res.sendStatus(200) : res.sendStatus(304);
   } catch (err) {
