@@ -39,15 +39,9 @@ app.patch("/", async (req, res) => {
       return res.sendStatus(401);
     }
 
-    console.log("req.body: ", req.body);
+    var { userId, orderId, orderStatus } = req.body;
 
-    var { userId, orderId, updatedStatus } = req.body;
-
-    var isStatusUpdated = await updateOrderStatus(
-      userId,
-      orderId,
-      updatedStatus
-    );
+    var isStatusUpdated = await updateOrderStatus(userId, orderId, orderStatus);
 
     if (!isStatusUpdated) {
       await reportError(userId, null, "Попытка обновления статуса заказа");
@@ -55,7 +49,7 @@ app.patch("/", async (req, res) => {
     }
 
     var message = `Статус заказа ${orderId} изменен.\nТекущий статус:\n${statusTranslate(
-      updatedStatus
+      orderStatus
     )}`;
 
     await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
