@@ -39,21 +39,21 @@ app.patch("/", async (req, res) => {
       return res.sendStatus(401);
     }
 
-    var requestPayload = req.body;
+    var { userId, orderId, updatedStatus } = req.body;
 
-    var userId = requestPayload.userId;
-    var orderId = requestPayload.orderId;
-    var status = requestPayload.updatedStatus;
+    var isStatusUpdated = await updateOrderStatus(
+      userId,
+      orderId,
+      updatedStatus
+    );
 
-    var updatedStatus = await updateOrderStatus(userId, orderId, status);
-
-    if (!updatedStatus) {
-      await reportError(userId, err, "Попытка обновления статуса заказа");
+    if (!isStatusUpdated) {
+      await reportError(userId, null, "Попытка обновления статуса заказа");
       return;
     }
 
     var message = `Статус заказа ${orderId} изменен.\nТекущий статус:\n${statusTranslate(
-      status
+      updatedStatus
     )}`;
 
     await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
@@ -72,9 +72,8 @@ app.delete("/", async (req, res) => {
     if (type !== "Bearer" && token !== env.bot_secret_key) {
       return res.sendStatus(401);
     }
-    var requestPayload = req.body;
-    var userId = requestPayload.userId;
-    var orderId = requestPayload.orderId;
+
+    var { userId, orderId } = req.body;
 
     await deleteOrder(userId, orderId)
       .then(() => res.sendStatus(200))
