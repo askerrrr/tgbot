@@ -2,6 +2,7 @@ var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
 var { reportError } = require("./errReportBot");
+var { deleteUser } = require("./database/services/deleteUser");
 var { deleteOrder } = require("./database/services/deleteOrder");
 var { statusTranslate } = require("./services/different/statusTranslate");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
@@ -59,7 +60,7 @@ app.patch("/", async (req, res) => {
   }
 });
 
-app.delete("/", async (req, res) => {
+app.delete("/order", async (req, res) => {
   try {
     var authHeader = req.headers.authorization;
 
@@ -77,6 +78,32 @@ app.delete("/", async (req, res) => {
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     return res.sendStatus(500);
+  }
+});
+
+app.delete("/user", async (req, res) => {
+  var authHeader = req.headers?.authorization;
+
+  if (!authHeader) {
+    res.sendStatus(401);
+  }
+
+  var [type, token] = authHeader.split(" ");
+
+  if (type !== "Bearer" && token !== env.bot_secret_key) {
+    res.sendStatus(401);
+  }
+
+  var { userId } = req.body;
+
+  var isUserDeleted = await deleteUser(userId);
+
+  if (!isUserDeleted) {
+    await reportError(userId, null, "Запрос на удаление пользователя");
+    res.sendStatus(304);
+    return;
+  } else {
+    res.sendStatus(200);
   }
 });
 
