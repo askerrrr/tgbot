@@ -39,6 +39,8 @@ app.patch("/", async (req, res) => {
       return res.sendStatus(401);
     }
 
+    console.log("req.body: ", req.body);
+
     var { userId, orderId, updatedStatus } = req.body;
 
     var isStatusUpdated = await updateOrderStatus(
