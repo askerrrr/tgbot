@@ -51,7 +51,7 @@ app.patch("/", async (req, res) => {
     if (isStatusUpdated) {
       var statusDescription = getStatusDescription(orderStatus);
 
-      var message = `Статус заказа ${orderId} изменен\nТекущий статус: ${statusDescription}`;
+      var message = `Статус заказа ${orderId} изменен.\nТекущий статус: ${statusDescription}`;
 
       await bot.api.sendMessage(userId, message);
       res.sendStatus(200);
@@ -61,7 +61,7 @@ app.patch("/", async (req, res) => {
     }
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
-    return res.sendStatus(500);
+    res.sendStatus(500);
   }
 });
 
@@ -97,7 +97,7 @@ app.delete("/order", async (req, res) => {
     return;
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
-    return res.sendStatus(500);
+    res.sendStatus(500);
   }
 });
 
