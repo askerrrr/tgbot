@@ -4,9 +4,12 @@ var express = require("express");
 var { reportError } = require("./errReportBot");
 var { deleteUser } = require("./database/services/deleteUser");
 var { deleteOrder } = require("./database/services/deleteOrder");
-var { statusTranslate } = require("./services/different/statusTranslate");
+var {
+  getStatusDescription,
+} = require("./services/different/getStatusDescription");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 const { checkOrderExists } = require("./database/services/checkOrderExists");
+const e = require("express");
 
 var app = express();
 var bot = new Bot(env.main_bot_token);
@@ -45,16 +48,17 @@ app.patch("/", async (req, res) => {
 
     var isStatusUpdated = await updateOrderStatus(userId, orderId, orderStatus);
 
-    if (!isStatusUpdated) {
+    if (isStatusUpdated) {
+      var statusDescription = getStatusDescription(orderStatus);
+
+      var message = `Статус заказа ${orderId} изменен\nТекущий статус: ${statusDescription}`;
+
+      await bot.api.sendMessage(userId, message);
+      res.sendStatus(200);
+    } else {
       await reportError(userId, null, "Попытка обновления статуса заказа");
       return;
     }
-
-    var message = `Статус заказа ${orderId} изменен.\nТекущий статус:\n${statusTranslate(
-      orderStatus
-    )}`;
-
-    await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
     return res.sendStatus(500);

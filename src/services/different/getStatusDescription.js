@@ -1,4 +1,4 @@
-module.exports.statusTranslate = (statusId) => {
+module.exports.getStatusDescription = (statusId) => {
   var translatedStatus;
   switch (statusId.split(":")[1]) {
     case "0":
