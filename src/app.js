@@ -114,12 +114,13 @@ app.delete("/user", async (req, res) => {
 
   var isUserDeleted = await deleteUser(userId);
 
-  if (!isUserDeleted) {
+  if (isUserDeleted) {
+    res.sendStatus(200);
+    return;
+  } else {
     await reportError(userId, null, "Запрос на удаление пользователя");
     res.sendStatus(304);
     return;
-  } else {
-    res.sendStatus(200);
   }
 });
 
