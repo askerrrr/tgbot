@@ -68,28 +68,29 @@ app.delete("/order", async (req, res) => {
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
-      return res.sendStatus(401);
+      res.sendStatus(401);
+      return;
     }
 
     var { userId, orderId } = req.body;
 
     var isOrderExists = await checkOrderExists(userId, orderId);
 
-    if (!isOrderExists) {
-      res.sendStatus(404);
-      return;
-    }
+    if (isOrderExists) {
+      var isOrderDeleted = await deleteOrder(userId, orderId);
 
-    var isOrderDeleted = await deleteOrder(userId, orderId);
+      if (isOrderDeleted) {
+        res.sendStatus(200);
+        return;
+      }
 
-    if (!isOrderDeleted) {
       await reportError(userId, null, "Запрос на удаление заказа");
       res.sendStatus(304);
       return;
-    } else {
-      res.sendStatus(200);
-      return;
     }
+
+    res.sendStatus(404);
+    return;
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     return res.sendStatus(500);
