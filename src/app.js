@@ -82,7 +82,7 @@ app.delete("/order", async (req, res) => {
     var isOrderDeleted = await deleteOrder(userId, orderId);
 
     if (!isOrderDeleted) {
-      await reportError(userId, err, "Запрос на удаление заказа");
+      await reportError(userId, null, "Запрос на удаление заказа");
       res.sendStatus(304);
       return;
     } else {
