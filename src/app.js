@@ -77,6 +77,7 @@ app.delete("/order", async (req, res) => {
 
     if (!isOrderExists) {
       res.sendStatus(404);
+      return;
     }
 
     var isOrderDeleted = await deleteOrder(userId, orderId);
@@ -87,6 +88,7 @@ app.delete("/order", async (req, res) => {
       return;
     } else {
       res.sendStatus(200);
+      return;
     }
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
