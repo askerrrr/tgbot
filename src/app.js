@@ -6,6 +6,7 @@ var { deleteUser } = require("./database/services/deleteUser");
 var { deleteOrder } = require("./database/services/deleteOrder");
 var { statusTranslate } = require("./services/different/statusTranslate");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
+const { checkOrderExists } = require("./database/services/checkOrderExists");
 
 var app = express();
 var bot = new Bot(env.main_bot_token);
@@ -72,9 +73,21 @@ app.delete("/order", async (req, res) => {
 
     var { userId, orderId } = req.body;
 
-    await deleteOrder(userId, orderId)
-      .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(404));
+    var isOrderExists = await checkOrderExists(userId, orderId);
+
+    if (!isOrderExists) {
+      res.sendStatus(404);
+    }
+
+    var isOrderDeleted = await deleteOrder(userId, orderId);
+
+    if (!isOrderDeleted) {
+      await reportError(userId, err, "Запрос на удаление заказа");
+      res.sendStatus(304);
+      return;
+    } else {
+      res.sendStatus(200);
+    }
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     return res.sendStatus(500);
