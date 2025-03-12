@@ -9,7 +9,6 @@ var {
 } = require("./services/different/getStatusDescription");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 const { checkOrderExists } = require("./database/services/checkOrderExists");
-const e = require("express");
 
 var app = express();
 var bot = new Bot(env.main_bot_token);
