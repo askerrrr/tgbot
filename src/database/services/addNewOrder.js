@@ -5,21 +5,27 @@ module.exports.addNewOrder = async (order) => {
   delete order.file;
 
   var collection = (await db).collection("users");
-  var existingDocument = await collection.findOne({
+  var document = await collection.findOne({
     userId: order.userId,
   });
 
-  if (!existingDocument) {
+  var result;
+
+  if (!document) {
     await addNewUser(order.userId, order.firstName, order.userName, []);
 
-    await collection.updateOne(
+    result = await collection.updateOne(
       { userId: order.userId },
       { $push: { orders: { order } } }
     );
+
+    return result.modifiedCount;
   }
 
-  await collection.updateOne(
+  result = await collection.updateOne(
     { userId: order.userId },
     { $push: { orders: { order } } }
   );
+
+  return result.modifiedCount;
 };

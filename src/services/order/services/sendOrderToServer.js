@@ -1,8 +1,7 @@
 var { env } = require("../../../env");
 var { reportError } = require("../../../errReportBot");
-var { errNotification } = require("../../../utils/text");
 
-module.exports.sendOrderToServer = async (order, ctx) => {
+module.exports.sendOrderToServer = async (order) => {
   try {
     var response = await fetch(env.bot_api_order, {
       method: "POST",
@@ -15,12 +14,12 @@ module.exports.sendOrderToServer = async (order, ctx) => {
 
     if (!response.ok) {
       var err = await response.text();
-
       await reportError(order.useId, err, "Ошибка при отправлении заказа");
-      await ctx.reply(errNotification);
       return;
+    } else {
+      return true;
     }
   } catch (err) {
-    console.log(err);
+    await reportError(order.useId, err, "Ошибка при отправлении заказа");
   }
 };
