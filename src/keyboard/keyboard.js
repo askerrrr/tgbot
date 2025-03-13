@@ -1,6 +1,6 @@
 var { Keyboard } = require("grammy");
 
-var keyboardForTheMainMenu = new Keyboard()
+var MainMenu = new Keyboard()
   .text("Сделать заказ!")
   .text("Как сделать заказ?")
   .row()
@@ -10,7 +10,7 @@ var keyboardForTheMainMenu = new Keyboard()
   .text("Часто задаваемые вопросы FAQ")
   .resized();
 
-var keyboardForOtherQueries = new Keyboard()
+var OtherQueries = new Keyboard()
 
   .text("Личный кабинет")
   .row()
@@ -21,7 +21,7 @@ var keyboardForOtherQueries = new Keyboard()
   .text("Основное меню")
   .resized();
 
-var keyboardForPersonalAccount = new Keyboard()
+var PersonalAccount = new Keyboard()
   .text("Активные заказы")
   .row()
   .text("Завершенные заказы")
@@ -29,7 +29,7 @@ var keyboardForPersonalAccount = new Keyboard()
   .text("Назад")
   .resized();
 
-var keyboardForDownloadingApp = new Keyboard()
+var DownloadingApp = new Keyboard()
   .text("1688")
   .text("Taobao")
   .row()
@@ -39,7 +39,7 @@ var keyboardForDownloadingApp = new Keyboard()
   .text("Назад")
   .resized();
 
-var keyboardForAppGuides = new Keyboard()
+var AppGuides = new Keyboard()
   .text("Гайд по 1688")
   .text("Гайд по Taobao")
   .row()
@@ -49,19 +49,19 @@ var keyboardForAppGuides = new Keyboard()
   .text("Основное меню")
   .resized();
 
-var keyboardForСheckingOrder = new Keyboard()
+var СheckingOrder = new Keyboard()
   .text("Да, все правильно!")
   .row()
   .text("Нет, тут ошибка, я хочу исправить данные")
   .resized();
 
-var keyboardForOrder = new Keyboard()
+var Order = new Keyboard()
   .text("Заказать один товар")
   .row()
   .text("Заказать несколько товаров")
   .resized();
 
-var keyboardForFAQ = new Keyboard()
+var FAQ = new Keyboard()
   .text("Доставка")
   .row()
   .text("Маркеплейсы с которыми работаем")
@@ -69,7 +69,7 @@ var keyboardForFAQ = new Keyboard()
   .text("Основное меню")
   .resized();
 
-var keyboardForDelivery = new Keyboard()
+var Delivery = new Keyboard()
   .text("Адрес доставки")
   .text("Стоимость доставки")
   .row()
@@ -78,14 +78,16 @@ var keyboardForDelivery = new Keyboard()
   .text("Назад к вопросам")
   .resized();
 
-module.exports = {
-  keyboardForFAQ,
-  keyboardForOrder,
-  keyboardForDelivery,
-  keyboardForAppGuides,
-  keyboardForTheMainMenu,
-  keyboardForOtherQueries,
-  keyboardForСheckingOrder,
-  keyboardForDownloadingApp,
-  keyboardForPersonalAccount,
+var keyboard = {
+  FAQ,
+  Order,
+  Delivery,
+  AppGuides,
+  MainMenu,
+  OtherQueries,
+  СheckingOrder,
+  DownloadingApp,
+  PersonalAccount,
 };
+
+module.exports = { keyboard };

@@ -1,4 +1,4 @@
-var { keyboardForOrder } = require("../../keyboard/keyboard");
+var { keyboard } = require("../../keyboard/keyboard");
 var { findOrder } = require("../../database/services/findOrder");
 
 module.exports.order = async (bot) => {
@@ -16,7 +16,7 @@ module.exports.order = async (bot) => {
     }
 
     await ctx.reply("Выберите один из вариантов", {
-      reply_markup: keyboardForOrder,
+      reply_markup: keyboard.Order,
     });
   });
 };
