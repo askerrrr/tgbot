@@ -101,29 +101,34 @@ app.delete("/order", async (req, res) => {
 });
 
 app.delete("/user", async (req, res) => {
-  var authHeader = req.headers?.authorization;
+  try {
+    var authHeader = req.headers?.authorization;
 
-  if (!authHeader) {
-    res.sendStatus(401);
-  }
+    if (!authHeader) {
+      res.sendStatus(401);
+    }
 
-  var [type, token] = authHeader.split(" ");
+    var [type, token] = authHeader.split(" ");
 
-  if (type !== "Bearer" && token !== env.bot_secret_key) {
-    res.sendStatus(401);
-  }
+    if (type !== "Bearer" && token !== env.bot_secret_key) {
+      res.sendStatus(401);
+    }
 
-  var { userId } = req.body;
+    var { userId } = req.body;
 
-  var isUserDeleted = await deleteUser(userId);
+    var isUserDeleted = await deleteUser(userId);
 
-  if (isUserDeleted) {
-    res.sendStatus(200);
-    return;
-  } else {
+    if (isUserDeleted) {
+      res.sendStatus(200);
+      return;
+    } else {
+      await reportError(userId, null, "Запрос на удаление пользователя");
+      res.sendStatus(304);
+      return;
+    }
+  } catch (err) {
     await reportError(userId, null, "Запрос на удаление пользователя");
-    res.sendStatus(304);
-    return;
+    res.sendStatus(500);
   }
 });
 
