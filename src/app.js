@@ -55,8 +55,8 @@ app.patch("/", async (req, res) => {
       await bot.api.sendMessage(userId, message);
       res.sendStatus(200);
     } else {
+      res.sendStatus(304);
       await reportError(userId, null, "Попытка обновления статуса заказа");
-      return;
     }
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
@@ -72,7 +72,6 @@ app.delete("/order", async (req, res) => {
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
       res.sendStatus(401);
-      return;
     }
 
     var { userId, orderId } = req.body;
@@ -84,16 +83,13 @@ app.delete("/order", async (req, res) => {
 
       if (isOrderDeleted) {
         res.sendStatus(200);
-        return;
       }
 
       await reportError(userId, null, "Запрос на удаление заказа");
       res.sendStatus(304);
-      return;
     }
 
     res.sendStatus(404);
-    return;
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     res.sendStatus(500);
@@ -120,11 +116,9 @@ app.delete("/user", async (req, res) => {
 
     if (isUserDeleted) {
       res.sendStatus(200);
-      return;
     } else {
       await reportError(userId, null, "Запрос на удаление пользователя");
       res.sendStatus(304);
-      return;
     }
   } catch (err) {
     await reportError(userId, null, "Запрос на удаление пользователя");
