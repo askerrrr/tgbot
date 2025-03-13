@@ -7,8 +7,8 @@ var { deleteOrder } = require("./database/services/deleteOrder");
 var {
   getStatusDescription,
 } = require("./services/different/getStatusDescription");
+var { checkOrderExists } = require("./database/services/checkOrderExists");
 var { updateOrderStatus } = require("./database/services/updateOrderStatus");
-const { checkOrderExists } = require("./database/services/checkOrderExists");
 
 var app = express();
 var bot = new Bot(env.main_bot_token);
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   );
 
   if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
+    res.sendStatus(204);
   }
 
   next();
@@ -35,12 +35,14 @@ app.patch("/", async (req, res) => {
   try {
     var authHeader = req.headers?.authorization;
 
-    if (!authHeader) return res.sendStatus(401);
+    if (!authHeader) {
+      res.sendStatus(401);
+    }
 
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
-      return res.sendStatus(401);
+      res.sendStatus(401);
     }
 
     var { userId, orderId, orderStatus } = req.body;
@@ -68,6 +70,10 @@ app.delete("/order", async (req, res) => {
   try {
     var authHeader = req.headers.authorization;
 
+    if (!authHeader) {
+      res.sendStatus(401);
+    }
+
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
@@ -83,13 +89,14 @@ app.delete("/order", async (req, res) => {
 
       if (isOrderDeleted) {
         res.sendStatus(200);
+        return;
       }
 
       await reportError(userId, null, "Запрос на удаление заказа");
       res.sendStatus(304);
+    } else {
+      res.sendStatus(404);
     }
-
-    res.sendStatus(404);
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     res.sendStatus(500);
