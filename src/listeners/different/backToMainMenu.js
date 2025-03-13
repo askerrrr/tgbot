@@ -1,9 +1,11 @@
 var { keyboard } = require("../../keyboard/keyboard");
 
-module.exports.backToMainMenu = async (bot) => {
+var backToMainMenu = async (bot) => {
   bot.hears("Основное меню", async (ctx) => {
     await ctx.reply("Меню", {
       reply_markup: keyboard.MainMenu,
     });
   });
 };
+
+module.exports = { backToMainMenu };

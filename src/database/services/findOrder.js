@@ -1,6 +1,6 @@
 var { db } = require("../db");
 
-module.exports.findOrder = async (userId) => {
+var findOrder = async (userId) => {
   var collection = (await db).collection("users");
   var result = await collection.findOne({ userId });
 
@@ -15,3 +15,5 @@ module.exports.findOrder = async (userId) => {
       ),
   };
 };
+
+module.exports = { findOrder };

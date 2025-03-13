@@ -5,7 +5,7 @@ var { getDateAndTime } = require("./services/order/services/dateAndTime.js");
 
 var errorBot = new Bot(env.err_bot_token);
 
-module.exports.reportError = async (userId, err, location) => {
+var reportError = async (userId, err, location) => {
   var errReport =
     "Ошибка у пользователя: " +
     userId +
@@ -18,5 +18,7 @@ module.exports.reportError = async (userId, err, location) => {
 
   await errorBot.api.sendMessage(env.admin_id_2, errReport);
 };
+
+module.exports = { reportError };
 
 errorBot.catch(errorHandler);

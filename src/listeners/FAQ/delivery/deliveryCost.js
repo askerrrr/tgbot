@@ -1,7 +1,9 @@
 var { deliveryCostText } = require("../../../utils/text");
 
-module.exports.deliveryCost = async (bot) => {
+var deliveryCost = async (bot) => {
   bot.hears("Стоимость доставки", async (ctx) => {
     await ctx.reply(deliveryCostText);
   });
 };
+
+module.exports = { deliveryCost };

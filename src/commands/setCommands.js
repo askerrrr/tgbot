@@ -1,4 +1,4 @@
-module.exports.setCommands = async (bot) => {
+var setCommands = async (bot) => {
   bot.api.setMyCommands([
     {
       command: "menu",
@@ -6,3 +6,5 @@ module.exports.setCommands = async (bot) => {
     },
   ]);
 };
+
+module.exports = { setCommands };

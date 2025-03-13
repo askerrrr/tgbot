@@ -4,7 +4,7 @@ var {
 var { greetUser } = require("../services/different/greetUser");
 var { addNewUser } = require("../database/services/addNewUser");
 
-module.exports.chatMember = async (bot) => {
+var chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
     await ctx.reply(greetUser(ctx.chat.id, ctx.from.first_name));
 
@@ -21,3 +21,5 @@ module.exports.chatMember = async (bot) => {
     await sendUserDataToServer({ userId, firstName, userName, orders: [] });
   });
 };
+
+module.exports = { chatMember };

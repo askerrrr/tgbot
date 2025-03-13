@@ -16,7 +16,7 @@ var { conversations, createConversation } = require("@grammyjs/conversations");
 
 var adapter = new MemorySessionStorage();
 
-module.exports.middlewareForConversations = async (bot) => {
+var middlewareForConversations = async (bot) => {
   bot.use(chatMembers(adapter));
   chatMember(bot);
 
@@ -33,3 +33,5 @@ module.exports.middlewareForConversations = async (bot) => {
 
   bot.on("message", catchUnexpectedMessages);
 };
+
+module.exports = { middlewareForConversations };

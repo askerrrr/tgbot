@@ -1,6 +1,6 @@
-var { linkForApp1688 } = require('../../utils/text');
+var { linkForApp1688 } = require("../../utils/text");
 
-module.exports.link1688 = async (bot) => {
+var link1688 = async (bot) => {
   bot.hears("1688", async (ctx) => {
     await ctx.reply(linkForApp1688, {
       parse_mode: "HTML",
@@ -8,3 +8,5 @@ module.exports.link1688 = async (bot) => {
     });
   });
 };
+
+module.exports = { link1688 };

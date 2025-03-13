@@ -1,6 +1,6 @@
 var { db } = require("../db");
 
-module.exports.addOrders = async (order) => {
+var addOrders = async (order) => {
   var collection = (await db).collection("users");
 
   await collection.updateOne(
@@ -8,3 +8,5 @@ module.exports.addOrders = async (order) => {
     { $push: { orders: { order } } }
   );
 };
+
+module.exports = { addOrders };

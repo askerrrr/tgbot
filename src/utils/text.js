@@ -44,6 +44,5 @@ module.exports = {
   linkForAppPinduoduo,
   deliveryAddressText,
   textForFailedAttempt,
-
   messageForNonReadyFunctions,
 };

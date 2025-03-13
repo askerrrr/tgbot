@@ -1,6 +1,6 @@
 var { GrammyError, HttpError } = require("grammy");
 
-module.exports.errorHandler = async (err) => {
+var errorHandler = async (err) => {
   var ctx = err.ctx;
   console.error(`Error while handling update ${ctx.update.update_id}:`);
   var e = err.error;
@@ -12,3 +12,5 @@ module.exports.errorHandler = async (err) => {
     console.error("Unknown error:", e);
   }
 };
+
+module.exports = { errorHandler };

@@ -1,7 +1,7 @@
 var { keyboard } = require("../../keyboard/keyboard");
 var { findOrder } = require("../../database/services/findOrder");
 
-module.exports.order = async (bot) => {
+var order = async (bot) => {
   bot.hears("Сделать заказ!", async (ctx) => {
     var activeOrders = await findOrder(ctx.chat.id).then((order) =>
       order.active()
@@ -20,3 +20,5 @@ module.exports.order = async (bot) => {
     });
   });
 };
+
+module.exports = { order };

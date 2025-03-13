@@ -7,7 +7,7 @@ var { diffListeners } = require("./different/diffListeners");
 var { personalAccount } = require("./personalAccount/personalAccount");
 var { middlewareForConversations } = require("../middleware/middleware");
 
-module.exports.allListeners = async (bot) => {
+var allListeners = async (bot) => {
   FAQ(bot);
   other(bot);
   guides(bot);
@@ -17,3 +17,5 @@ module.exports.allListeners = async (bot) => {
   personalAccount(bot);
   middlewareForConversations(bot);
 };
+
+module.exports = { allListeners };

@@ -1,6 +1,6 @@
 var { db } = require("../db");
 
-module.exports.deleteOrder = async (userId, orderId) => {
+var deleteOrder = async (userId, orderId) => {
   var collection = (await db).collection("users");
   var result = await collection.updateOne(
     {
@@ -16,3 +16,5 @@ module.exports.deleteOrder = async (userId, orderId) => {
 
   return result.modifiedCount;
 };
+
+module.exports = { deleteOrder };

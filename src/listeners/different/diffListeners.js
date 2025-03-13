@@ -1,7 +1,9 @@
 var { backToMainMenu } = require("./backToMainMenu");
 var { backToOtherMenu } = require("./backToOtherMenu");
 
-module.exports.diffListeners = async (bot) => {
+var diffListeners = async (bot) => {
   backToMainMenu(bot);
   backToOtherMenu(bot);
 };
+
+module.exports = { diffListeners };

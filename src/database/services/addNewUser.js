@@ -1,6 +1,6 @@
 var { db } = require("../db");
 
-module.exports.addNewUser = async (userId, firstName, userName, orders) => {
+var addNewUser = async (userId, firstName, userName, orders) => {
   var collection = (await db).collection("users");
   var existingDocument = await collection.findOne({ userId });
 
@@ -10,3 +10,5 @@ module.exports.addNewUser = async (userId, firstName, userName, orders) => {
 
   return;
 };
+
+module.exports = { addNewUser };

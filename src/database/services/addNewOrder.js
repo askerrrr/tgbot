@@ -1,7 +1,7 @@
 var { db } = require("../db");
 var { addNewUser } = require("./addNewUser");
 
-module.exports.addNewOrder = async (order) => {
+var addNewOrder = async (order) => {
   delete order.file;
 
   var collection = (await db).collection("users");
@@ -29,3 +29,5 @@ module.exports.addNewOrder = async (order) => {
 
   return result.modifiedCount;
 };
+
+module.exports = { addNewOrder };

@@ -1,7 +1,7 @@
 var { env } = require("../../env");
 var { reportError } = require("../../errReportBot");
 
-module.exports.sendUserDataToServer = async (userData) => {
+var sendUserDataToServer = async (userData) => {
   var response = await fetch(env.bot_api_users, {
     method: "POST",
     body: JSON.stringify(userData),
@@ -18,3 +18,5 @@ module.exports.sendUserDataToServer = async (userData) => {
     return;
   }
 };
+
+module.exports = { sendUserDataToServer };

@@ -1,7 +1,7 @@
 var { env } = require("../../env");
 var { reportError } = require("../../errReportBot");
 
-module.exports.getOrdersFromMainServer = async (userId) => {
+var getOrdersFromMainServer = async (userId) => {
   var url = env.bot_api_status + "/" + userId;
 
   var response = await fetch(url, {
@@ -26,3 +26,5 @@ module.exports.getOrdersFromMainServer = async (userId) => {
 
   return json;
 };
+
+module.exports = { getOrdersFromMainServer };

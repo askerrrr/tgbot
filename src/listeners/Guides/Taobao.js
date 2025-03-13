@@ -1,6 +1,6 @@
 var { env } = require("../../env");
 
-module.exports.guideForTaobao = async (bot) => {
+var guideForTaobao = async (bot) => {
   var guideURL = `Посмотреть гайд на youtube ${env.guideURLTaobao}`;
 
   bot.hears("Гайд по Taobao", async (ctx) => {
@@ -10,3 +10,5 @@ module.exports.guideForTaobao = async (bot) => {
     });
   });
 };
+
+module.exports = { guideForTaobao };

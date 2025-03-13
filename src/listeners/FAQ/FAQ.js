@@ -1,7 +1,9 @@
 var { shoppingSites } = require("./shoppingSites");
 var { delivery } = require("./delivery/delivery");
 
-module.exports.FAQ = async (bot) => {
+var FAQ = async (bot) => {
   delivery(bot);
   shoppingSites(bot);
 };
+
+module.exports = { FAQ };

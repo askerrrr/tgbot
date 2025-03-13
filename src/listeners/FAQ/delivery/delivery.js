@@ -4,7 +4,7 @@ var { deliveryTime } = require("./deliveryTime");
 var { deliveryAddress } = require("./deliveryAdress");
 var { keyboard } = require("../../../keyboard/keyboard");
 
-module.exports.delivery = async (bot) => {
+var delivery = async (bot) => {
   bot.hears("Доставка", async (ctx) => {
     await ctx.reply("Вот варианты", {
       reply_markup: keyboard.Delivery,
@@ -16,3 +16,5 @@ module.exports.delivery = async (bot) => {
   deliveryTime(bot);
   deliveryAddress(bot);
 };
+
+module.exports = { delivery };

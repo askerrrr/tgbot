@@ -2,10 +2,12 @@ var { getTemplate } = require("./getTemplate");
 var { downloadApp } = require("./downloadApp");
 var { personalAccount } = require("./personalAccount");
 
-module.exports.other = async (bot) => {
+var other = async (bot) => {
   getTemplate(bot);
 
   downloadApp(bot);
 
   personalAccount(bot);
 };
+
+module.exports = { other };

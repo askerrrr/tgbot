@@ -6,7 +6,7 @@ var {
   getOrdersFromMainServer,
 } = require("../../services/different/getOrdersFromMainServer");
 
-module.exports.getCompletedOrders = async (bot) => {
+var getCompletedOrders = async (bot) => {
   bot.hears("Завершенные заказы", async (ctx) => {
     var userId = ctx.chat.id + "";
 
@@ -41,3 +41,5 @@ module.exports.getCompletedOrders = async (bot) => {
     }
   });
 };
+
+module.exports = { getCompletedOrders };

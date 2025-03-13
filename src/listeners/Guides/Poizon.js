@@ -1,6 +1,6 @@
 var { env } = require("../../env");
 
-module.exports.guideForPoizon = async (bot) => {
+var guideForPoizon = async (bot) => {
   var guideURL = `Посмотреть гайд на youtube ${env.guideURLPoizon}`;
 
   bot.hears("Гайд по Ponzon", async (ctx) => {
@@ -10,3 +10,5 @@ module.exports.guideForPoizon = async (bot) => {
     });
   });
 };
+
+module.exports = { guideForPoizon };

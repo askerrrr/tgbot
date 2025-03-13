@@ -1,6 +1,6 @@
-var { linkForAppPinduoduo } = require('../../utils/text');
+var { linkForAppPinduoduo } = require("../../utils/text");
 
-module.exports.linkPinduoduo = async (bot) => {
+var linkPinduoduo = async (bot) => {
   bot.hears("Pinduoduo", async (ctx) => {
     await ctx.reply(linkForAppPinduoduo, {
       parse_mode: "HTML",
@@ -8,3 +8,5 @@ module.exports.linkPinduoduo = async (bot) => {
     });
   });
 };
+
+module.exports = { linkPinduoduo };
