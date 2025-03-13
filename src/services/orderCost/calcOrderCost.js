@@ -1,6 +1,6 @@
 var { convertYuanToRubles } = require("./service/convertYuanToRubles");
 
-async function calcOrderCost(conversation, ctx) {
+var calcOrderCost = async (conversation, ctx) => {
   await ctx.reply("Отправьте число");
 
   var result = await conversation.wait();
@@ -22,6 +22,6 @@ async function calcOrderCost(conversation, ctx) {
     await ctx.reply(`Введите числовое значение, которое больше 0`);
     await calcOrderCost(conversation, ctx);
   }
-}
+};
 
 module.exports = { calcOrderCost };

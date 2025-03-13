@@ -7,7 +7,7 @@ var origin = [
 
 var protocol = ["http:", "https:"];
 
-module.exports.checkUrl = async (url) => {
+var checkUrl = async (url) => {
   try {
     var result = new URL(url);
 
@@ -36,3 +36,5 @@ module.exports.checkUrl = async (url) => {
     return;
   }
 };
+
+module.exports = { checkUrl };

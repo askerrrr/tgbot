@@ -1,6 +1,6 @@
 var { env } = require("../../../env");
 
-module.exports.getFileUrl = async (ctx, fileId) => {
+var getFileUrl = async (ctx, fileId) => {
   try {
     var fileLink = await ctx.api.getFile(fileId);
     var filePath = fileLink.file_path;
@@ -11,3 +11,5 @@ module.exports.getFileUrl = async (ctx, fileId) => {
     console.log(err);
   }
 };
+
+module.exports = { getFileUrl };

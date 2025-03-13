@@ -1,4 +1,4 @@
-module.exports.getPhone = async (ctx, conversation) => {
+var getPhone = async (ctx, conversation) => {
   try {
     await ctx.reply(
       "Напишите номер вашего телефона без пробелов, скобок и дефисов"
@@ -18,3 +18,5 @@ module.exports.getPhone = async (ctx, conversation) => {
     reportError(ctx.chat.id, err, "Заказ товара, получение телефона (single)");
   }
 };
+
+module.exports = { getPhone };

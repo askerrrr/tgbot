@@ -1,7 +1,7 @@
 var { checkUrl } = require("../../services/checkUrl");
 var { reportError } = require("../../../../errReportBot");
 
-module.exports.getUrl = async (ctx, conversation) => {
+var getUrl = async (ctx, conversation) => {
   try {
     await ctx.reply("Пришлите ссылку на товар", {
       reply_markup: { remove_keyboard: true },
@@ -23,3 +23,5 @@ module.exports.getUrl = async (ctx, conversation) => {
     await reportError(ctx.chat.id, err, "Заказ товаров, получение ссылки");
   }
 };
+
+module.exports = { getUrl };

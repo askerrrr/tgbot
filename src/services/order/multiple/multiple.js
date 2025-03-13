@@ -6,7 +6,7 @@ var { getDateAndTime } = require("../services/dateAndTime");
 var { checkOrderStatus } = require("../services/checkOrderStatus");
 var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
-async function multiple(conversation, ctx) {
+var multiple = async (conversation, ctx) => {
   try {
     let fileData, phone;
 
@@ -67,7 +67,6 @@ async function multiple(conversation, ctx) {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 module.exports = { multiple };
-//экспорт в src\middleware\middleware.js

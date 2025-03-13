@@ -1,7 +1,7 @@
 var { env } = require("../../../env");
 var { reportError } = require("../../../errReportBot");
 
-module.exports.sendOrderToServer = async (order) => {
+var sendOrderToServer = async (order) => {
   try {
     var response = await fetch(env.bot_api_order, {
       method: "POST",
@@ -23,3 +23,5 @@ module.exports.sendOrderToServer = async (order) => {
     await reportError(order.useId, err, "Ошибка при отправлении заказа");
   }
 };
+
+module.exports = { sendOrderToServer };

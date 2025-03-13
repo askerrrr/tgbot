@@ -1,7 +1,7 @@
 var { reportError } = require("../../../../errReportBot");
 var { checkFileExtension } = require("../../services/checkFileExtension");
 
-module.exports.getImage = async (ctx, conversation) => {
+var getImage = async (ctx, conversation) => {
   try {
     await ctx.reply("Отправьте фото товара");
 
@@ -28,3 +28,5 @@ module.exports.getImage = async (ctx, conversation) => {
     await reportError(ctx.chat.id, err, "Заказ товара, получение фото");
   }
 };
+
+module.exports = { getImage };

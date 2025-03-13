@@ -2,7 +2,7 @@ var { env } = require("../../../env");
 var { shorteningString } = require("./shorteningString");
 var { getCNYValuteValue } = require("./getCNYValuteValue");
 
-module.exports.convertYuanToRubles = async (val) => {
+var convertYuanToRubles = async (val) => {
   var valuteValue = await getCNYValuteValue();
 
   var result =
@@ -12,3 +12,5 @@ module.exports.convertYuanToRubles = async (val) => {
 
   return num;
 };
+
+module.exports = { convertYuanToRubles };

@@ -1,7 +1,7 @@
 var { env } = require("../../../env");
 var { makeOrderNotification } = require("./makeOrderNotification");
 
-module.exports.sendOrderToAdmin = async (ctx, order, fileId) => {
+var sendOrderToAdmin = async (ctx, order, fileId) => {
   try {
     var messageToAdmin = makeOrderNotification(order);
 
@@ -16,3 +16,5 @@ module.exports.sendOrderToAdmin = async (ctx, order, fileId) => {
     console.log(err);
   }
 };
+
+module.exports = { sendOrderToAdmin };

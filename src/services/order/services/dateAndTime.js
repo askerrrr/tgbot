@@ -1,4 +1,4 @@
-module.exports.getDateAndTime = () => {
+var getDateAndTime = () => {
   var date = new Date();
 
   var s = date.getSeconds();
@@ -25,3 +25,5 @@ module.exports.getDateAndTime = () => {
       h + ":" + m + ":" + s + "  " + d + "." + month + "." + y,
   };
 };
+
+module.exports = { getDateAndTime };

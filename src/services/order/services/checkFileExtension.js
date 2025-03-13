@@ -1,6 +1,6 @@
 var { getFileUrl } = require("./getFileURL");
 
-module.exports.checkFileExtension = async (ctx, fileId) => {
+var checkFileExtension = async (ctx, fileId) => {
   var fileUrl = await getFileUrl(ctx, fileId);
 
   var fileExtension = fileUrl.split(".")[3].toLowerCase();
@@ -9,3 +9,5 @@ module.exports.checkFileExtension = async (ctx, fileId) => {
 
   return extensionArr.includes(fileExtension) ? fileUrl + "::" + fileId : null;
 };
+
+module.exports = { checkFileExtension };

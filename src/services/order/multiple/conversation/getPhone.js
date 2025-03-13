@@ -1,6 +1,6 @@
 var { reportError } = require("../../../../errReportBot");
 
-module.exports.getPhone = async (ctx, conversation) => {
+var getPhone = async (ctx, conversation) => {
   try {
     await ctx.reply(
       "Напишите номер вашего телефона без пробелов, скобок и дефисов"
@@ -17,6 +17,12 @@ module.exports.getPhone = async (ctx, conversation) => {
       return;
     }
   } catch (err) {
-    await reportError(ctx.chat.id, err, "Заказ товаров, получение  телефона (multiple)");
+    await reportError(
+      ctx.chat.id,
+      err,
+      "Заказ товаров, получение  телефона (multiple)"
+    );
   }
 };
+
+module.exports = { getPhone };

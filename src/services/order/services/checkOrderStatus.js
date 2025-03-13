@@ -4,13 +4,7 @@ var { sendOrderToServer } = require("./sendOrderToServer");
 var { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
 var { addNewOrder } = require("../../../database/services/addNewOrder");
 
-module.exports.checkOrderStatus = async (
-  ctx,
-  order,
-  fileId,
-  orderFunc,
-  conversation
-) => {
+var checkOrderStatus = async (ctx, order, fileId, orderFunc, conversation) => {
   try {
     var status = await conversation.wait();
 
@@ -44,3 +38,5 @@ module.exports.checkOrderStatus = async (
     reportError(order.useId, err, "Ошибка при отправлении заказа");
   }
 };
+
+module.exports = { checkOrderStatus };

@@ -8,7 +8,7 @@ var { getDescriprion } = require("./conversation/getDescription");
 var { checkOrderStatus } = require("../services/checkOrderStatus");
 var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
-async function single(conversation, ctx) {
+var single = async (conversation, ctx) => {
   try {
     var itemUrl, imageData, description, phone;
 
@@ -99,6 +99,6 @@ async function single(conversation, ctx) {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 module.exports = { single };

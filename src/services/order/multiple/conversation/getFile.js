@@ -1,7 +1,8 @@
 var { reportError } = require("../../../../errReportBot");
 var { getFileUrl } = require("../../services/getFileURL");
+var { checkDocType } = require("../../services/checkDocType");
 
-module.exports.getFile = async (ctx, conversation) => {
+var getFile = async (ctx, conversation) => {
   try {
     await ctx.reply(
       "Пришлите эксель таблицу с вашими товарами\n\nПолучить шаблон можно в разделе -  /Другое/Получить шаблон",
@@ -34,7 +35,4 @@ module.exports.getFile = async (ctx, conversation) => {
   }
 };
 
-var checkDocType = (fileName, mimeType) =>
-  fileName.split(".").at(-1).toLowerCase() === "xlsx" &&
-  mimeType ===
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+module.exports = { getFile };
