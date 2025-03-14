@@ -1,6 +1,7 @@
 var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
+var { logger } = require("./logger");
 var { reportError } = require("./errReportBot");
 var { deleteUser } = require("./database/services/deleteUser");
 var { deleteOrder } = require("./database/services/deleteOrder");
@@ -62,6 +63,7 @@ app.patch("/", async (req, res) => {
     }
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
+    logger.error({ place: "patch order status", userId, err });
     res.sendStatus(500);
   }
 });
@@ -98,6 +100,7 @@ app.delete("/order", async (req, res) => {
     }
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
+    logger.error({ place: "delete order", userId, err });
     res.sendStatus(500);
   }
 });
@@ -128,6 +131,7 @@ app.delete("/user", async (req, res) => {
     }
   } catch (err) {
     await reportError(userId, null, "Запрос на удаление пользователя");
+    logger.error({ place: "delete user", userId, err });
     res.sendStatus(500);
   }
 });
