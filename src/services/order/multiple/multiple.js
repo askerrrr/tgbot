@@ -63,7 +63,7 @@ var multiple = async (conversation, ctx) => {
     };
 
     await returnOrderToUser(ctx, phone, fileId);
-    await checkOrderStatus(ctx, order, fileId, multiple, conversation);
+    await checkOrderStatus(ctx, conversation, order, fileId, multiple);
   } catch (err) {
     console.log(err);
   }

@@ -1,10 +1,11 @@
+var { reportError } = require("../../../errReportBot");
 var { sendOrderToAdmin } = require("./sendOrderToAdmin");
 var { errNotification } = require("../../../utils/text");
 var { sendOrderToServer } = require("./sendOrderToServer");
 var { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
 var { addNewOrder } = require("../../../database/services/addNewOrder");
 
-var checkOrderStatus = async (ctx, order, fileId, orderFunc, conversation) => {
+var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
   try {
     var status = await conversation.wait();
 
