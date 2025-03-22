@@ -83,15 +83,15 @@ var single = async (conversation, ctx) => {
       firstName,
       userName,
       phone,
-      itemUrl,
       date: orderTime,
-      description,
-      orderStatus: "not-accepted-for-processing:0",
       type: "single",
+      orderStatus: "not-accepted-for-processing:0",
       file: {
         path,
         telegramApiFileUrl,
       },
+      itemUrl,
+      description,
     };
 
     await returnOrderToUser(ctx, itemUrl, phone, imageId, description);
