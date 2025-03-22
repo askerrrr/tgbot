@@ -17,8 +17,8 @@ var chatMember = async (bot) => {
     var firstName = chatMember.user.first_name || "";
     var userName = chatMember.user.user_name || "";
 
-    await addNewUser(userId, firstName, userName, []);
-    await sendUserDataToServer({ userId, firstName, userName, orders: [] });
+    await addNewUser(userId, firstName, userName);
+    await sendUserDataToServer({ userId, firstName, userName });
   });
 };
 

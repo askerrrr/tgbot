@@ -12,7 +12,7 @@ var addNewOrder = async (order) => {
   var result;
 
   if (!document) {
-    await addNewUser(order.userId, order.firstName, order.userName, []);
+    await addNewUser(order.userId, order.firstName, order.userName);
 
     result = await collection.updateOne(
       { userId: order.userId },
