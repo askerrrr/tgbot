@@ -1,6 +1,8 @@
+var cors = require("cors");
 var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
+var corsOptions = require("./corsOptions");
 var { logger } = require("./logger");
 var { reportError } = require("./errReportBot");
 var { deleteUser } = require("./database/services/deleteUser");
@@ -14,36 +16,35 @@ var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 var app = express();
 var bot = new Bot(env.main_bot_token);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(cors());
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", env.main_server);
-  res.setHeader("Access-Control-Allow-Methods", "PATCH, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    ["Content-Type", "Authorization"].join(",")
-  );
+  res.setHeader("Access-Control-Allow-Methods", "PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 
   if (req.method === "OPTIONS") {
-    res.sendStatus(204);
+    return res.sendStatus(200);
   }
 
   next();
 });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.patch("/", async (req, res) => {
   try {
     var authHeader = req.headers?.authorization;
-
+    console.log("authHeader: ", authHeader);
     if (!authHeader) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var { userId, orderId, orderStatus } = req.body;
@@ -56,15 +57,21 @@ app.patch("/", async (req, res) => {
       var message = `Статус заказа ${orderId} изменен.\nТекущий статус: ${statusDescription}`;
 
       await bot.api.sendMessage(userId, message);
-      res.sendStatus(200);
+
+      return res.sendStatus(200);
     } else {
       res.sendStatus(304);
-      await reportError(userId, null, "Попытка обновления статуса заказа");
+
+      return await reportError(
+        userId,
+        null,
+        "Попытка обновления статуса заказа"
+      );
     }
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");
     logger.error({ place: "patch order status", userId, err });
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
@@ -73,13 +80,13 @@ app.delete("/order", async (req, res) => {
     var authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var { userId, orderId } = req.body;
@@ -96,12 +103,12 @@ app.delete("/order", async (req, res) => {
         return res.sendStatus(304);
       }
     } else {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
   } catch (err) {
     await reportError(userId, err, "Запрос на удаление заказа");
     logger.error({ place: "delete order", userId, err });
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
@@ -110,13 +117,13 @@ app.delete("/user", async (req, res) => {
     var authHeader = req.headers?.authorization;
 
     if (!authHeader) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" && token !== env.bot_secret_key) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     var { userId } = req.body;
@@ -124,15 +131,15 @@ app.delete("/user", async (req, res) => {
     var isUserDeleted = await deleteUser(userId);
 
     if (isUserDeleted) {
-      res.sendStatus(200);
+      return res.sendStatus(200);
     } else {
       await reportError(userId, null, "Запрос на удаление пользователя");
-      res.sendStatus(304);
+      return res.sendStatus(304);
     }
   } catch (err) {
     await reportError(userId, null, "Запрос на удаление пользователя");
     logger.error({ place: "delete user", userId, err });
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 });
 
