@@ -16,27 +16,13 @@ var { updateOrderStatus } = require("./database/services/updateOrderStatus");
 var app = express();
 var bot = new Bot(env.main_bot_token);
 
-app.use(cors());
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", env.main_server);
-  res.setHeader("Access-Control-Allow-Methods", "PATCH,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.patch("/", async (req, res) => {
   try {
     var authHeader = req.headers?.authorization;
-    console.log("authHeader: ", authHeader);
+
     if (!authHeader) {
       return res.sendStatus(401);
     }
