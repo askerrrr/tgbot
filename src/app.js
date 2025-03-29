@@ -1,8 +1,6 @@
-var cors = require("cors");
 var { env } = require("./env");
 var { Bot } = require("grammy");
 var express = require("express");
-var corsOptions = require("./corsOptions");
 var { logger } = require("./logger");
 var { reportError } = require("./errReportBot");
 var { deleteUser } = require("./database/services/deleteUser");
