@@ -1,38 +1,40 @@
 var crypto = require("crypto");
+var { env } = require("../../../env");
 var { getFile } = require("./conversation/getFile");
 var { getPhone } = require("./conversation/getPhone");
-var { textForFailedAttempt } = require("../../../utils/text");
 var { getDateAndTime } = require("../services/dateAndTime");
+var { textForFailedAttempt } = require("../../../utils/text");
 var { checkOrderStatus } = require("../services/checkOrderStatus");
 var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
 var multiple = async (conversation, ctx) => {
   try {
-    let fileData, phone;
-
-    let failedAttempt = 0;
+    var fileData,
+      failedFileAttempts = 0;
 
     while (!fileData) {
       fileData = await getFile(ctx, conversation);
 
       if (!fileData) {
-        failedAttempt++;
+        failedFileAttempts++;
 
-        if (failedAttempt > 2) {
+        if (failedFileAttempts > 2) {
           await ctx.reply(textForFailedAttempt);
-          failedAttempt = 0;
           return;
         }
       }
     }
 
+    var phone,
+      failedPhoneAttempts = 0;
+
     while (!phone) {
       phone = await getPhone(ctx, conversation);
 
       if (!phone) {
-        failedAttempt++;
+        failedPhoneAttempts++;
 
-        if (failedAttempt > 4) {
+        if (failedPhoneAttempts > 4) {
           await ctx.reply(textForFailedAttempt);
           return;
         }
@@ -40,12 +42,12 @@ var multiple = async (conversation, ctx) => {
     }
 
     var userId = ctx.chat.id + "";
-    var userName = ctx.chat.user_name || "";
-    var firstName = ctx.chat.first_name || "";
+    var userName = ctx.chat.user_name ?? "";
+    var firstName = ctx.chat.first_name ?? "";
     var orderTime = getDateAndTime().fullDateTime();
     var randomKey = crypto.randomInt(10, 100000000000) + "0";
-    var [telegramApiFileUrl, fileId] = fileData.split("::");
-    var path = "/var/www/userFiles/" + userId + "/docs/" + randomKey + ".xlsx";
+    var { telegramApiFileUrl, fileId } = fileData;
+    var path = env.getFilePath(userId, randomKey, ".xlsx");
 
     var order = {
       id: randomKey,

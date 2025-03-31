@@ -20,8 +20,9 @@ var getFile = async (ctx, conversation) => {
 
       if (validDocType) {
         var fileId = message.document.file_id;
-        var fileURL = await getFileUrl(ctx, fileId);
-        return fileURL + "::" + fileId;
+        var telegramApiFileUrl = await getFileUrl(ctx, fileId);
+
+        return { telegramApiFileUrl, fileId };
       } else {
         await ctx.reply("Это не эксель таблица, попробуйте еще раз");
         return;

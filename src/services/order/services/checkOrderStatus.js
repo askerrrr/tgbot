@@ -20,12 +20,10 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
       var isOrderAdded = await addNewOrder(order);
 
       if (successfulResponse && isOrderAdded) {
-        await sendOrderToAdmin(ctx, order, fileId);
-        return;
+        return await sendOrderToAdmin(ctx, order, fileId);
       }
 
-      await ctx.reply(errNotification);
-      return;
+      return await ctx.reply(errNotification);
     } else if (status.msg.text == "Нет, тут ошибка, я хочу исправить данные") {
       await ctx.reply("Давайте исправим", {
         reply_markup: {
@@ -33,7 +31,7 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
         },
       });
 
-      await orderFunc(conversation, ctx);
+      return await orderFunc(conversation, ctx);
     }
   } catch (err) {
     reportError(order.useId, err, "Ошибка при отправлении заказа");

@@ -1,4 +1,5 @@
 var crypto = require("crypto");
+var { env } = require("../../../env");
 var { getUrl } = require("./conversation/getUrl");
 var { getImage } = require("./conversation/getImage");
 var { getPhone } = require("./conversation/getPhone");
@@ -10,12 +11,8 @@ var { returnOrderToUser } = require("./conversation/returnOrderToUser");
 
 var single = async (conversation, ctx) => {
   try {
-    var itemUrl, imageData, description, phone;
-
-    var countForPhone = 0;
-    var countForItemUrl = 0;
-    var countForImageData = 0;
-    var countForDescription = 0;
+    var itemUrl,
+      countForItemUrl = 0;
 
     while (!itemUrl) {
       itemUrl = await getUrl(ctx, conversation);
@@ -30,6 +27,9 @@ var single = async (conversation, ctx) => {
       }
     }
 
+    var imageData,
+      countForImageData = 0;
+
     while (!imageData) {
       imageData = await getImage(ctx, conversation);
 
@@ -43,6 +43,9 @@ var single = async (conversation, ctx) => {
       }
     }
 
+    var description,
+      countForDescription = 0;
+
     while (!description) {
       description = await getDescriprion(ctx, conversation);
 
@@ -55,6 +58,9 @@ var single = async (conversation, ctx) => {
         }
       }
     }
+
+    var phone,
+      countForPhone = 0;
 
     while (!phone) {
       phone = await getPhone(ctx, conversation);
@@ -70,12 +76,12 @@ var single = async (conversation, ctx) => {
     }
 
     var userId = ctx.chat.id + "";
-    var userName = ctx.chat.user_name || "";
-    var firstName = ctx.chat.first_name || "";
+    var userName = ctx.chat.user_name ?? "";
+    var firstName = ctx.chat.first_name ?? "";
     var orderTime = getDateAndTime().fullDateTime();
     var randomKey = crypto.randomInt(10, 100000000000) + "0";
-    var [telegramApiFileUrl, imageId] = imageData.split("::");
-    var path = "/var/www/userFiles/" + userId + "/images/" + randomKey + ".jpg";
+    var { telegramApiFileUrl, fileId } = imageData;
+    var path = env.getFilePath(userId, randomKey, ".jpg");
 
     var order = {
       id: randomKey,
@@ -94,8 +100,8 @@ var single = async (conversation, ctx) => {
       description,
     };
 
-    await returnOrderToUser(ctx, itemUrl, phone, imageId, description);
-    await checkOrderStatus(ctx, conversation, order, imageId, single);
+    await returnOrderToUser(ctx, itemUrl, phone, fileId, description);
+    await checkOrderStatus(ctx, conversation, order, fileId, single);
   } catch (err) {
     console.log(err);
   }

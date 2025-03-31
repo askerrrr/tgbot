@@ -2,11 +2,9 @@ var { wrappUrl } = require("../../services/wrappUrl");
 var { keyboard } = require("../../../../keyboard/keyboard");
 var { checkDescription } = require("../../services/checkDescription");
 
-var { keyboard } = require("../../../../keyboard/keyboard");
-
-var returnOrderToUser = async (ctx, url, phone, imageId, description) => {
+var returnOrderToUser = async (ctx, itemUrl, phone, imageId, description) => {
   description = checkDescription(description);
-  var wrappedUrl = wrappUrl(url);
+  var wrappedUrl = wrappUrl(itemUrl);
 
   await ctx.reply(`${description}\nТелефон: ${phone}\nСсылка: ${wrappedUrl}`, {
     parse_mode: "HTML",
