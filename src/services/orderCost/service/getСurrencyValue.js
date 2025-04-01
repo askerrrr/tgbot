@@ -5,7 +5,7 @@ var getСurrencyValue = async () => {
     throw new Error("Cannot get currency value");
   }
 
-  var json = await res.json();
+  var json = await response.json();
 
   return json.Valute.CNY.Value;
 };
