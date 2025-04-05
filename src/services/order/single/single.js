@@ -91,7 +91,7 @@ var single = async (conversation, ctx) => {
       phone,
       date: orderTime,
       type: "single",
-      orderStatus: "not-accepted-for-processing:0",
+      orderStatus: { id: 0, value: "not-accepted-for-processing" },
       file: {
         path,
         telegramApiFileUrl,

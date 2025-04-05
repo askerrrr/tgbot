@@ -57,7 +57,7 @@ var multiple = async (conversation, ctx) => {
       phone,
       date: orderTime,
       type: "multiple",
-      orderStatus: "not-accepted-for-processing:0",
+      orderStatus: { id: 0, value: "not-accepted-for-processing" },
       file: {
         path,
         telegramApiFileUrl,
