@@ -1,3 +1,4 @@
+var { Bot } = require("grammy");
 var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
 var { reportError } = require("../../errReportBot");
@@ -34,7 +35,7 @@ var updateOrderStatus = async (req, res) => {
 
     var message = `Статус заказа ${orderId} изменен.\nТекущий статус: ${statusDescription}`;
 
-    var bot = req.app.locals.bot;
+    var bot = new Bot(env.main_bot_token);
 
     await bot.api.sendMessage(userId, message);
 
