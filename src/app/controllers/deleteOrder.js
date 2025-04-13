@@ -1,7 +1,7 @@
 var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
 var { reportError } = require("../../errReportBot");
-var validateAuthHeader = require("../../errReportBot");
+var validateAuthHeader = require("../services/validateAuthHeader");
 
 var deleteOrder = async (req, res) => {
   try {
