@@ -82,6 +82,9 @@ var single = async (conversation, ctx) => {
     var randomKey = crypto.randomInt(10, 100000000000) + "0";
     var { telegramApiFileUrl, fileId } = imageData;
     var path = env.getFilePath(userId, randomKey, ".jpg");
+    var orderStatus = { id: 0, value: "not-accepted-for-processing" };
+    var file = { path, telegramApiFileUrl };
+    var type = "single";
 
     var order = {
       id: randomKey,
@@ -90,12 +93,9 @@ var single = async (conversation, ctx) => {
       userName,
       phone,
       date: orderTime,
-      type: "single",
-      orderStatus: { id: 0, value: "not-accepted-for-processing" },
-      file: {
-        path,
-        telegramApiFileUrl,
-      },
+      type,
+      orderStatus,
+      file,
       itemUrl,
       description,
     };

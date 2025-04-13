@@ -2,7 +2,7 @@ var {
   sendUserDataToServer,
 } = require("../services/different/sendUserDataToServer");
 var { greetUser } = require("../services/different/greetUser");
-var { addNewUser } = require("../database/services/addNewUser");
+var { createUser } = require("../database/services/createUser");
 
 var chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
@@ -17,7 +17,7 @@ var chatMember = async (bot) => {
     var firstName = chatMember.user.first_name ?? "";
     var userName = chatMember.user.user_name ?? "";
 
-    await addNewUser(userId, firstName, userName);
+    await createUser({ userId, firstName, userName });
     await sendUserDataToServer({ userId, firstName, userName });
   });
 };

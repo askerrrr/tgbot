@@ -3,11 +3,11 @@ var { db } = require("../db");
 var checkOrderExists = async (userId, orderId) => {
   var collection = (await db).collection("users");
 
-  var document = await collection.findOne({ userId });
+  var { orders } = await collection.findOne({ userId });
 
-  var order = document.orders.some((e) => e.order.id == orderId);
+  var result = orders.some((order) => order.id == orderId);
 
-  return order;
+  return result;
 };
 
 module.exports = { checkOrderExists };

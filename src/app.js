@@ -44,13 +44,9 @@ app.patch("/", async (req, res) => {
 
       return res.sendStatus(200);
     } else {
-      res.sendStatus(304);
+      await reportError(userId, null, "Попытка обновления статуса заказа");
 
-      return await reportError(
-        userId,
-        null,
-        "Попытка обновления статуса заказа"
-      );
+      return res.sendStatus(304);
     }
   } catch (err) {
     await reportError(userId, err, "Попытка обновления статуса заказа");

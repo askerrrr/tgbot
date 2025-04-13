@@ -3,7 +3,7 @@ var { sendOrderToAdmin } = require("./sendOrderToAdmin");
 var { errNotification } = require("../../../utils/text");
 var { sendOrderToServer } = require("./sendOrderToServer");
 var { showOrderSuccessMessage } = require("./showOrderSuccessMessage");
-var { addNewOrder } = require("../../../database/services/addNewOrder");
+var { createOrder } = require("../../../database/services/createOrder");
 
 var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
   try {
@@ -17,7 +17,8 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
       });
 
       var successfulResponse = await sendOrderToServer(order);
-      var isOrderAdded = await addNewOrder(order);
+
+      var isOrderAdded = await createOrder(order);
 
       if (successfulResponse && isOrderAdded) {
         return await sendOrderToAdmin(ctx, order, fileId);

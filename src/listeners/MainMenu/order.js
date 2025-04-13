@@ -3,7 +3,7 @@ var { findOrder } = require("../../database/services/findOrder");
 
 var order = async (bot) => {
   bot.hears("Сделать заказ!", async (ctx) => {
-    var activeOrders = await findOrder(ctx.chat.id).then((order) =>
+    var activeOrders = await findOrder(ctx.chat.id + "").then((order) =>
       order.active()
     );
 

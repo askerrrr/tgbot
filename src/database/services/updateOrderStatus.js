@@ -3,15 +3,14 @@ var { db } = require("../db");
 var updateOrderStatus = async (userId, orderId, newStatus) => {
   var collection = (await db).collection("users");
 
-  var updatedStatus = await collection.updateOne(
-    { userId, "orders.order.id": orderId },
+  var result = await collection.updateOne(
+    { userId, "orders.id": orderId },
     {
-      $set: { "orders.$.order.orderStatus": newStatus },
+      $set: { "orders.$.orderStatus": newStatus },
     }
   );
 
-  return updatedStatus.modifiedCount;
+  return result.modifiedCount;
 };
 
-
-module.exports = {updateOrderStatus}
+module.exports = { updateOrderStatus };
