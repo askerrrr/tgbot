@@ -1,11 +1,11 @@
 var { keyboard } = require("../../keyboard/keyboard");
-var { findOrder } = require("../../database/services/findOrder");
+var {
+  getActiveOrdersFromDB,
+} = require("../../database/services/getActiveOrdersFromDB");
 
 var order = async (bot) => {
   bot.hears("Сделать заказ!", async (ctx) => {
-    var activeOrders = await findOrder(ctx.chat.id + "").then((order) =>
-      order.active()
-    );
+    var activeOrders = await getActiveOrdersFromDB(ctx.chat.id + "");
 
     if (activeOrders?.length > 5) {
       await ctx.reply(

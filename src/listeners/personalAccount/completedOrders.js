@@ -19,6 +19,7 @@ var getCompletedOrders = async (bot) => {
       }
     } else {
       var requestedOrders = await getOrdersFromMainServer(userId);
+
       var requestedCompletedOrders = requestedOrders?.completedOrders || [];
 
       if (requestedCompletedOrders.length) {
