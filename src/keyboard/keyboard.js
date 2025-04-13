@@ -59,6 +59,8 @@ var Order = new Keyboard()
   .text("Заказать один товар")
   .row()
   .text("Заказать несколько товаров")
+  .row()
+  .text("Основное меню")
   .resized();
 
 var FAQ = new Keyboard()
