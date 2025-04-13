@@ -6,9 +6,9 @@ var getActiveOrders = async (bot) => {
   bot.hears("Активные заказы", async (ctx) => {
     var userId = ctx.chat.id + "";
 
-    var { createOrder, getActiveOrdersFromDB } = await dbServices();
+    var db = await dbServices();
 
-    var activeOrders = await getActiveOrdersFromDB(userId);
+    var activeOrders = await db.getActiveOrdersFromDB(userId);
 
     if (activeOrders?.length) {
       for (var order of activeOrders) {
@@ -21,7 +21,7 @@ var getActiveOrders = async (bot) => {
       if (requestedActiveOrders.length) {
         for (var order of requestedActiveOrders) {
           await ctx.reply(showOrder(order));
-          await createOrder(order);
+          await db.createOrder(order);
         }
       }
 

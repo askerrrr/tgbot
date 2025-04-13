@@ -1,5 +1,5 @@
-async function checkOrderExists(userId, orderId) {
-  var { orders } = await this.findOne({ userId });
+async function checkOrderExists(collection, userId, orderId) {
+  var { orders } = await collection.findOne({ userId });
 
   var result = orders.some((order) => order.id == orderId);
 

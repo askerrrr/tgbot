@@ -1,5 +1,5 @@
-async function getActiveOrdersFromDB(userId) {
-  var { orders } = await this.findOne({ userId });
+async function getActiveOrdersFromDB(collection, userId) {
+  var { orders } = await collection.findOne({ userId });
 
   var activeOrders = orders.filter(
     (order) => order.orderStatus.value !== "order-is-completed"

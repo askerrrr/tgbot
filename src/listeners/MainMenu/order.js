@@ -1,11 +1,11 @@
+var { dbServices } = require("../../database/db");
 var { keyboard } = require("../../keyboard/keyboard");
-var {
-  getActiveOrdersFromDB,
-} = require("../../database/services/getActiveOrdersFromDB");
 
 var order = async (bot) => {
   bot.hears("Сделать заказ!", async (ctx) => {
-    var activeOrders = await getActiveOrdersFromDB(ctx.chat.id + "");
+    var db = await dbServices();
+
+    var activeOrders = await db.getActiveOrdersFromDB(ctx.chat.id + "");
 
     if (activeOrders?.length > 5) {
       await ctx.reply(

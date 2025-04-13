@@ -13,11 +13,11 @@ var deleteUser = async (req, res) => {
       return res.sendStatus(401);
     }
 
-    var { deleteUser } = await dbServices();
+    var db = await dbServices();
 
     var { userId } = req.body;
 
-    var isUserDeleted = await deleteUser(userId);
+    var isUserDeleted = await db.deleteUser(userId);
 
     if (!isUserDeleted) {
       await reportError(userId, null, "Запрос на удаление пользователя");

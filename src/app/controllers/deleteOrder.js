@@ -15,15 +15,15 @@ var deleteOrder = async (req, res) => {
 
     var { userId, orderId } = req.body;
 
-    var { deleteOrder, checkOrderExists } = await dbServices();
+    var db = await dbServices();
 
-    var isOrderExists = await checkOrderExists(userId, orderId);
+    var isOrderExists = await db.checkOrderExists(userId, orderId);
 
     if (!isOrderExists) {
       return res.sendStatus(404);
     }
 
-    var isOrderDeleted = await deleteOrder(userId, orderId);
+    var isOrderDeleted = await db.deleteOrder(userId, orderId);
 
     if (!isOrderDeleted) {
       await reportError(userId, null, "Запрос на удаление заказа");

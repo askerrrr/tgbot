@@ -1,5 +1,5 @@
-async function getCompletedOrdersFromDB(userId) {
-  var { orders } = await this.findOne({ userId });
+async function getCompletedOrdersFromDB(collection, userId) {
+  var { orders } = await collection.findOne({ userId });
 
   var completedOrders = orders.filter(
     (order) => order.orderStatus.value == "order-is-completed"
@@ -8,4 +8,4 @@ async function getCompletedOrdersFromDB(userId) {
   return completedOrders;
 }
 
-module.exports = getCompletedOrdersFromDB ;
+module.exports = getCompletedOrdersFromDB;

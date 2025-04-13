@@ -15,9 +15,9 @@ var chatMember = async (bot) => {
     var firstName = chatMember.user.first_name ?? "";
     var userName = chatMember.user.user_name ?? "";
 
-    var { createUser } = await dbServices();
+    var db = await dbServices();
 
-    await createUser({ userId, firstName, userName });
+    await db.createUser({ userId, firstName, userName });
     await sendUserDataToServer({ userId, firstName, userName });
   });
 };

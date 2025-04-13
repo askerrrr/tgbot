@@ -1,5 +1,5 @@
-async function createUser({ userId, firstName, userName }) {
-  var user = await this.findOne({ userId });
+async function createUser(collection, { userId, firstName, userName }) {
+  var user = await collection.findOne({ userId });
 
   if (!user) {
     await collection.insertOne({ userId, firstName, userName, orders: [] });

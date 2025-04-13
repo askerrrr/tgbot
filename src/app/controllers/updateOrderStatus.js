@@ -14,11 +14,15 @@ var updateOrderStatus = async (req, res) => {
       return res.sendStatus(401);
     }
 
-    var { updateOrderStatus } = await dbServices();
+    var db = await dbServices();
 
     var { userId, orderId, orderStatus } = req.body;
 
-    var isStatusUpdated = await updateOrderStatus(userId, orderId, orderStatus);
+    var isStatusUpdated = await db.updateOrderStatus(
+      userId,
+      orderId,
+      orderStatus
+    );
 
     if (!isStatusUpdated) {
       await reportError(userId, null, "Попытка обновления статуса заказа");

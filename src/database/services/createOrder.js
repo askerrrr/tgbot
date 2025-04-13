@@ -1,24 +1,22 @@
 var createUser = require("./createUser");
 var checkOrderExists = require("./checkOrderExists");
 
-async function createOrder(orderData) {
+async function createOrder(collection, orderData) {
   delete orderData.file;
 
   var { userId, id } = orderData;
 
-  var user = await this.findOne({ userId });
+  var user = await collection.findOne({ userId });
 
   if (!user) {
-    await createUser(orderData);
+    await createUser(collection, orderData);
   }
 
-  var orderIsExist = await checkOrderExists(userId, id);
-
-  if (orderIsExist) {
+  if (await checkOrderExists(collection, userId, id)) {
     return;
   }
 
-  var result = await this.updateOne(
+  var result = await collection.updateOne(
     { userId },
     { $push: { orders: { ...orderData } } }
   );

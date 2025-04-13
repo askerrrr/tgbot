@@ -6,9 +6,9 @@ var getCompletedOrders = async (bot) => {
   bot.hears("Завершенные заказы", async (ctx) => {
     var userId = ctx.chat.id + "";
 
-    var { createOrder, getCompletedOrdersFromDB } = await dbServices();
+    var db = await dbServices();
 
-    var completedOrders = await getCompletedOrdersFromDB(userId);
+    var completedOrders = await db.getCompletedOrdersFromDB(userId);
 
     if (completedOrders?.length) {
       for (var order of completedOrders) {
@@ -22,7 +22,7 @@ var getCompletedOrders = async (bot) => {
       if (requestedCompletedOrders.length) {
         for (var order of requestedCompletedOrders) {
           await ctx.reply(showOrder(order));
-          await createOrder(order);
+          await db.createOrder(order);
         }
       }
 

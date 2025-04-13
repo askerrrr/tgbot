@@ -1,5 +1,5 @@
-async function deleteUser(userId) {
-  var result = await collection.this({ userId });
+async function deleteUser(collection, userId) {
+  var result = await collection.findOne({ userId });
 
   return result.deletedCount;
 }
