@@ -32,4 +32,4 @@ var getOrdersFromMainServer = async (userId) => {
   }
 };
 
-module.exports = { getOrdersFromMainServer };
+module.exports = getOrdersFromMainServer;

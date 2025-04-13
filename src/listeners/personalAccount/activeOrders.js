@@ -1,15 +1,12 @@
 var { showOrder } = require("./showOrderContent");
-var { createOrder } = require("../../database/services/createOrder");
-var {
-  getActiveOrdersFromDB,
-} = require("../../database/services/getActiveOrdersFromDB");
-var {
-  getOrdersFromMainServer,
-} = require("../../services/different/getOrdersFromMainServer");
+var { dbServices } = require("../../database/db");
+var getOrdersFromMainServer = require("../../services/different/getOrdersFromMainServer");
 
 var getActiveOrders = async (bot) => {
   bot.hears("Активные заказы", async (ctx) => {
     var userId = ctx.chat.id + "";
+
+    var { createOrder, getActiveOrdersFromDB } = await dbServices();
 
     var activeOrders = await getActiveOrdersFromDB(userId);
 

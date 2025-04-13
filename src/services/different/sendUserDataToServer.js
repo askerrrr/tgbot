@@ -19,4 +19,4 @@ var sendUserDataToServer = async (userData) => {
   }
 };
 
-module.exports = { sendUserDataToServer };
+module.exports = sendUserDataToServer;

@@ -1,6 +1,4 @@
-var {
-  getStatusDescription,
-} = require("../../services/different/getStatusDescription");
+var getStatusDescription = require("../../services/different/getStatusDescription");
 
 var showOrder = (order) =>
   `ID пользователя : ${order.userId}\nID заказа : ${

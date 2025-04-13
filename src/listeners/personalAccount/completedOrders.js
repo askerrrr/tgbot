@@ -1,15 +1,12 @@
 var { showOrder } = require("./showOrderContent");
-var { createOrder } = require("../../database/services/createOrder");
-var {
-  getCompletedOrdersFromDB,
-} = require("../../database/services/getCompletedOrdersFromDB");
-var {
-  getOrdersFromMainServer,
-} = require("../../services/different/getOrdersFromMainServer");
+var { dbServices } = require("../../database/db");
+var getOrdersFromMainServer = require("../../services/different/getOrdersFromMainServer");
 
 var getCompletedOrders = async (bot) => {
   bot.hears("Завершенные заказы", async (ctx) => {
     var userId = ctx.chat.id + "";
+
+    var { createOrder, getCompletedOrdersFromDB } = await dbServices();
 
     var completedOrders = await getCompletedOrdersFromDB(userId);
 

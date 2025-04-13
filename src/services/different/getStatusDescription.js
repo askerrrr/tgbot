@@ -30,4 +30,4 @@ var getStatusDescription = (orderStatus) => {
   return translatedStatus;
 };
 
-module.exports = { getStatusDescription };
+module.exports = getStatusDescription;

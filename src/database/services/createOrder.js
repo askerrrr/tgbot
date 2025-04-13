@@ -1,15 +1,12 @@
-var { db } = require("../db");
-var { createUser } = require("./createUser");
-var { checkOrderExists } = require("./checkOrderExists");
+var createUser = require("./createUser");
+var checkOrderExists = require("./checkOrderExists");
 
-var createOrder = async (orderData) => {
+async function createOrder(orderData) {
   delete orderData.file;
-
-  var collection = (await db).collection("users");
 
   var { userId, id } = orderData;
 
-  var user = await collection.findOne({ userId });
+  var user = await this.findOne({ userId });
 
   if (!user) {
     await createUser(orderData);
@@ -21,12 +18,12 @@ var createOrder = async (orderData) => {
     return;
   }
 
-  var result = await collection.updateOne(
+  var result = await this.updateOne(
     { userId },
     { $push: { orders: { ...orderData } } }
   );
 
   return result.modifiedCount;
-};
+}
 
-module.exports = { createOrder };
+module.exports = createOrder;

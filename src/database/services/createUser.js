@@ -1,15 +1,11 @@
-var { db } = require("../db");
-
-var createUser = async ({ userId, firstName, userName }) => {
-  var collection = (await db).collection("users");
-
-  var user = await collection.findOne({ userId });
+async function createUser({ userId, firstName, userName }) {
+  var user = await this.findOne({ userId });
 
   if (!user) {
     await collection.insertOne({ userId, firstName, userName, orders: [] });
   }
 
   return;
-};
+}
 
-module.exports = { createUser };
+module.exports = createUser;
