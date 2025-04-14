@@ -1,4 +1,4 @@
-var { env } = require("../env");
+var env = require("../env");
 
 var { MongoClient } = require("mongodb");
 

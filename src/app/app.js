@@ -1,4 +1,4 @@
-var { env } = require("../env");
+var env = require("../env");
 var express = require("express");
 
 var app = express();
