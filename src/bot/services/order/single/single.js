@@ -75,24 +75,33 @@ var single = async (conversation, ctx) => {
       }
     }
 
-    var userId = ctx.chat.id + "";
-    var userName = ctx.chat.user_name ?? "";
-    var firstName = ctx.chat.first_name ?? "";
-    var orderTime = getDateAndTime().fullDateTime();
-    var randomKey = crypto.randomInt(10, 100000000000) + "0";
-    var { telegramApiFileUrl, fileId } = imageData;
-    var path = env.getFilePath(userId, randomKey, ".jpg");
-    var orderStatus = { id: 0, value: "not-accepted-for-processing" };
-    var file = { path, telegramApiFileUrl };
     var type = "single";
 
+    var userId = ctx.chat.id + "";
+
+    var userName = ctx.chat.user_name ?? "";
+
+    var file = { path, telegramApiFileUrl };
+
+    var firstName = ctx.chat.first_name ?? "";
+
+    var date = getDateAndTime().fullDateTime();
+
+    var { telegramApiFileUrl, fileId } = imageData;
+
+    var path = env.getFilePath(userId, id, ".jpg");
+
+    var id = crypto.randomInt(10, 100000000000) + "0";
+
+    var orderStatus = { id: 0, value: "not-accepted-for-processing" };
+
     var order = {
-      id: randomKey,
+      id,
       userId,
       firstName,
       userName,
       phone,
-      date: orderTime,
+      date,
       type,
       orderStatus,
       file,

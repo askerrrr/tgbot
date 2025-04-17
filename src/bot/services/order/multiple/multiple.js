@@ -41,27 +41,36 @@ var multiple = async (conversation, ctx) => {
       }
     }
 
+    var type = "multiple";
+
     var userId = ctx.chat.id + "";
+
+    var file = { path, telegramApiFileUrl };
+
     var userName = ctx.chat.user_name ?? "";
+
     var firstName = ctx.chat.first_name ?? "";
-    var orderTime = getDateAndTime().fullDateTime();
-    var randomKey = crypto.randomInt(10, 100000000000) + "0";
+
+    var date = getDateAndTime().fullDateTime();
+
     var { telegramApiFileUrl, fileId } = fileData;
-    var path = env.getFilePath(userId, randomKey, ".xlsx");
+
+    var path = env.getFilePath(userId, id, ".xlsx");
+
+    var id = crypto.randomInt(10, 100000000000) + "0";
+
+    var orderStatus = { id: 0, value: "not-accepted-for-processing" };
 
     var order = {
-      id: randomKey,
+      id,
       userId,
       firstName,
       userName,
       phone,
-      date: orderTime,
-      type: "multiple",
-      orderStatus: { id: 0, value: "not-accepted-for-processing" },
-      file: {
-        path,
-        telegramApiFileUrl,
-      },
+      date,
+      type,
+      orderStatus,
+      file,
     };
 
     await returnOrderToUser(ctx, phone, fileId);

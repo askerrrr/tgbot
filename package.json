@@ -4,7 +4,7 @@
   "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node --watch src/bot/mainBot.js & node --watch src/app/app.js & node --watch src/errReportBot.js"
+    "start": "node --watch src/bot/mainBot.js & node --watch src/app/app.js & node --watch src/bot/errReportBot.js"
   },
   "keywords": [],
   "author": "",
