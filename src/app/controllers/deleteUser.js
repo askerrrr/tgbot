@@ -1,6 +1,6 @@
 var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
-var { reportError } = require("../../errReportBot");
+var { reportError } = require("../../bot/errReportBot");
 var validateAuthHeader = require("../services/validateAuthHeader");
 
 var deleteUser = async (req, res) => {

@@ -6,4 +6,4 @@ var personalAccount = async (bot) => {
   getCompletedOrders(bot);
 };
 
-module.exports = { personalAccount };
+module.exports = personalAccount 

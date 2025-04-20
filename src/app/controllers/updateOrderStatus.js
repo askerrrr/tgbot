@@ -1,9 +1,9 @@
 var { Bot } = require("grammy");
 var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
-var { reportError } = require("../../errReportBot");
+var { reportError } = require("../../bot/errReportBot");
 var validateAuthHeader = require("../services/validateAuthHeader");
-var getStatusDescription = require("../../services/different/getStatusDescription");
+var getStatusDescription = require("../../bot/services/different/getStatusDescription");
 
 var updateOrderStatus = async (req, res) => {
   try {

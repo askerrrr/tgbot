@@ -4,7 +4,7 @@ var { guides } = require("./Guides/Guides");
 var { mainMenu } = require("./MainMenu/mainMenu");
 var { downloadApp } = require("./downloadApp/downloadApp");
 var { diffListeners } = require("./different/diffListeners");
-var { personalAccount } = require("./personalAccount/personalAccount");
+var personalAccount = require("./personalAccount/index");
 var { middlewareForConversations } = require("../middleware/middleware");
 
 var allListeners = async (bot) => {
