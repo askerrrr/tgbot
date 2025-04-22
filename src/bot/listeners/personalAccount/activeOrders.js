@@ -1,5 +1,5 @@
-var { showOrder } = require("../../services/different/showOrderContent");
 var { dbServices } = require("../../../database/db");
+var { showOrder } = require("../../services/different/showOrderContent");
 var getOrdersFromMainServer = require("../../services/different/getOrdersFromMainServer");
 
 var getActiveOrders = async (bot) => {
@@ -12,7 +12,7 @@ var getActiveOrders = async (bot) => {
 
     if (activeOrders?.length) {
       for (var order of activeOrders) {
-        await ctx.reply(showOrder(order));
+        await ctx.replyWithHTML(showOrder(order));
       }
     } else {
       var requestedOrders = await getOrdersFromMainServer(userId);
@@ -21,6 +21,7 @@ var getActiveOrders = async (bot) => {
       if (requestedActiveOrders.length) {
         for (var order of requestedActiveOrders) {
           await ctx.reply(showOrder(order));
+
           await db.createOrder(order);
         }
       }

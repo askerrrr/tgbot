@@ -2,6 +2,7 @@ var env = require("../env");
 
 var { MongoClient } = require("mongodb");
 
+var getUserById = require("./services/getUserById");
 var createUser = require("./services/createUser");
 var deleteUser = require("./services/deleteUser");
 var deleteOrder = require("./services/deleteOrder");
@@ -19,6 +20,8 @@ async function dbServices() {
   var collection = mongodb.db("database").collection("users");
 
   return {
+    getUserById: (userId) => getUserById(collection, userId),
+
     deleteUser: (userId) => deleteUser(collection, userId),
 
     createUser: (userData) => createUser(collection, userData),

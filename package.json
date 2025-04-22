@@ -12,6 +12,7 @@
   "dependencies": {
     "@grammyjs/chat-members": "^1.1.0",
     "@grammyjs/conversations": "^1.2.0",
+    "@grammyjs/parse-mode": "^1.11.1",
     "express": "^4.21.1",
     "grammy": "^1.25.1",
     "jsonwebtoken": "^9.0.2",
