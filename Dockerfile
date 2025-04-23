@@ -1,4 +1,4 @@
-FROM node:22.19-alpine3.20
+FROM node:22.19.1-alpine3.20
 WORKDIR /bot
 COPY package*.json /bot/
 RUN npm i \
