@@ -20,8 +20,6 @@ middlewareForConversations(bot);
 
 bot.catch(errorHandler);
 
-bot
-  .start({
-    allowed_updates: ["chat_member", "message"],
-  })
-  .then(() => console.log("main bot is started"));
+bot.start({
+  allowed_updates: ["chat_member", "message"],
+});
