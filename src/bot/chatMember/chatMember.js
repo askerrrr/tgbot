@@ -1,5 +1,5 @@
-var { randomBytes } = require("crypto");
 var { dbServices } = require("../../database/db");
+var getUserData = require("../services/different/getUserData");
 var { greetUser } = require("../services/different/greetUser");
 var sendUserDataToServer = require("../services/different/sendUserDataToServer");
 
@@ -12,15 +12,12 @@ var chatMember = async (bot) => {
       ctx.from.id
     );
 
-    var userId = chatMember.user.id + "";
-    var passwd = randomBytes(5).toString("hex");
-    var firstName = chatMember.user.first_name ?? "";
-    var userName = chatMember.user.user_name ?? "";
+    var userData = await getUserData(ctx.chat);
 
     var db = await dbServices();
 
-    await db.createUser({ userId, passwd, firstName, userName });
-    await sendUserDataToServer({ userId, passwd, firstName, userName });
+    await db.createUser(userData);
+    await sendUserDataToServer(userData);
   });
 };
 

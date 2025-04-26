@@ -14,7 +14,8 @@ var getCompletedOrdersFromDB = require("./services/getCompletedOrdersFromDB");
 
 var mongodb = new MongoClient(env.mongo_url);
 
-(async () => await mongodb.connect())();
+(async () =>
+  await mongodb.connect().then(() => console.log("mongodb is connected")))();
 
 async function dbServices() {
   var collection = mongodb.db("database").collection("users");
