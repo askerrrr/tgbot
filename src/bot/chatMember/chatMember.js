@@ -5,12 +5,7 @@ var sendUserDataToServer = require("../services/different/sendUserDataToServer")
 
 var chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
-    await ctx.reply(greetUser(ctx.chat.id, ctx.from.first_name));
-
-    var chatMember = await ctx.chatMembers.getChatMember(
-      ctx.chat.id,
-      ctx.from.id
-    );
+    await ctx.reply(greetUser(ctx.chat.id, ctx.chat.first_name));
 
     var userData = await getUserData(ctx.chat);
 

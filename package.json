@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grammyjs/chat-members": "^1.1.0",
     "@grammyjs/conversations": "^1.2.0",
     "@grammyjs/parse-mode": "^1.11.1",
     "express": "^4.21.1",

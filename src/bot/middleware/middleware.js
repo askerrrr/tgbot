@@ -1,6 +1,5 @@
-var { chatMembers } = require("@grammyjs/chat-members");
+var { session } = require("grammy");
 var { chatMember } = require("../chatMember/chatMember");
-var { session, MemorySessionStorage } = require("grammy");
 var { single } = require("../services/order/single/single");
 var { orderCost } = require("../listeners/MainMenu/orderCost");
 var { multiple } = require("../services/order/multiple/multiple");
@@ -14,10 +13,7 @@ var { conversations, createConversation } = require("@grammyjs/conversations");
 //
 //
 
-var adapter = new MemorySessionStorage();
-
 var middlewareForConversations = async (bot) => {
-  bot.use(chatMembers(adapter));
   chatMember(bot);
 
   bot.use(session({ initial: () => ({}) }));

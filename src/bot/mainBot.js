@@ -20,6 +20,4 @@ middlewareForConversations(bot);
 
 bot.catch(errorHandler);
 
-bot.start({
-  allowed_updates: ["chat_member", "message"],
-});
+bot.start();
