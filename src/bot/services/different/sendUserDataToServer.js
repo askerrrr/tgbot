@@ -3,7 +3,6 @@ var { reportError } = require("../../errReportBot");
 
 var sendUserDataToServer = async (userData) => {
   try {
-    console.log("userData: ", userData);
     var response = await fetch(env.bot_api_users, {
       method: "POST",
       body: JSON.stringify(userData),
