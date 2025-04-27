@@ -2,20 +2,25 @@ var env = require("../../../env");
 var { reportError } = require("../../errReportBot");
 
 var sendUserDataToServer = async (userData) => {
-  var response = await fetch(env.bot_api_users, {
-    method: "POST",
-    body: JSON.stringify(userData),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + env.bot_secret_key,
-    },
-  });
+  try {
+    console.log("userData: ", userData);
+    var response = await fetch(env.bot_api_users, {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + env.bot_secret_key,
+      },
+    });
 
-  if (!response.ok) {
-    var err = await response.text();
-    await reportError(userData.userId, err, "Отправка данных о пользователе");
+    if (!response.ok) {
+      var err = new Error(response.statusText);
+      err.code = response.status;
 
-    return;
+      throw err;
+    }
+  } catch (err) {
+    await reportError(userData.userId, err, "Отправка данных пользователе");
   }
 };
 

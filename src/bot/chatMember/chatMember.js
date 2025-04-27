@@ -5,14 +5,18 @@ var sendUserDataToServer = require("../services/different/sendUserDataToServer")
 
 var chatMember = async (bot) => {
   bot.hears("/start", async (ctx) => {
-    await ctx.reply(greetUser(ctx.chat.id, ctx.chat.first_name));
-
     var userData = await getUserData(ctx.chat);
 
     var db = await dbServices();
 
-    await db.createUser(userData);
-    await sendUserDataToServer(userData);
+    var successCreateUser = await db.createUser(userData);
+    var successResponse = await sendUserDataToServer(userData);
+
+    if (!successCreateUser || !successResponse) {
+      return ctx.reply("Произошла ошибка, попробуйте позже");
+    }
+
+    await ctx.reply(greetUser(ctx.chat.id, ctx.chat.first_name));
   });
 };
 
