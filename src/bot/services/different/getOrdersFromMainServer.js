@@ -2,7 +2,8 @@ var env = require("../../../env");
 var { reportError } = require("../../errReportBot");
 
 var getOrdersFromMainServer = async (userId) => {
-  var url = env.bot_api_orders + "/" + userId;
+  var url = env.bot_api_orders + userId;
+
   try {
     var response = await fetch(url, {
       method: "GET",
@@ -17,9 +18,9 @@ var getOrdersFromMainServer = async (userId) => {
     }
 
     if (!response.ok) {
-      var err = await response.text();
-      await reportError(userId, err, "Запрос на получение заказов");
-      return;
+      var err = new Error(response.statusText);
+      err.code = response.status;
+      throw err;
     }
 
     var json = await response.json();
@@ -29,6 +30,9 @@ var getOrdersFromMainServer = async (userId) => {
     if (err.message.startsWith("Unexpected token")) {
       return;
     }
+
+    await reportError(userId, err, "Запрос на получение заказов");
+    return;
   }
 };
 
