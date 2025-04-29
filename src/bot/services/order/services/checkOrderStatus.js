@@ -35,6 +35,7 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
       return await orderFunc(conversation, ctx);
     }
   } catch (err) {
+    console.log("err: ", err);
     logger.error({ place: "check order status", userId: order.userId, err });
     reportError(order.useId, err, "Ошибка при отправлении заказа");
   }

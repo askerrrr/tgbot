@@ -1,3 +1,4 @@
+var { logger } = require("../../../../logger");
 var env = require("../../../../env");
 var { reportError } = require("../../../errReportBot");
 
@@ -13,13 +14,18 @@ var sendOrderToServer = async (order) => {
     });
 
     if (!response.ok) {
-      var err = await response.text();
-      await reportError(order.useId, err, "Ошибка при отправлении заказа");
-      return;
-    } else {
-      return true;
+      var err = new Error(response.statusText);
+      err.code = response.status;
+      throw err;
     }
+
+    return true;
   } catch (err) {
+    logger.error({
+      place: "отправлении заказа на сервер",
+      userId: order.userId,
+      err,
+    });
     await reportError(order.useId, err, "Ошибка при отправлении заказа");
   }
 };
