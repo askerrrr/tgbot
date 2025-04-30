@@ -18,6 +18,8 @@ var sendUserDataToServer = async (userData) => {
 
       throw err;
     }
+
+    return true;
   } catch (err) {
     await reportError(userData.userId, err, "Отправка данных пользователе");
   }
