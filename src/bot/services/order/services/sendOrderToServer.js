@@ -1,5 +1,5 @@
-var { logger } = require("../../../../logger");
 var env = require("../../../../env");
+var { logger } = require("../../../../logger");
 var { reportError } = require("../../../errReportBot");
 
 var sendOrderToServer = async (order) => {
