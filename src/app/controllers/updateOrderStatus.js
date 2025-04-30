@@ -1,3 +1,4 @@
+var env = require("../../env");
 var { Bot } = require("grammy");
 var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
@@ -26,8 +27,6 @@ var updateOrderStatus = async (req, res) => {
     );
 
     if (!isStatusUpdated) {
-      await reportError(userId, null, "Попытка обновления статуса заказа");
-
       return res.sendStatus(304);
     }
 
