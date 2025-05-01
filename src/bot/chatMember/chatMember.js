@@ -4,8 +4,8 @@ var { greetUser } = require("../services/different/greetUser");
 var sendUserDataToServer = require("../services/different/sendUserDataToServer");
 
 var chatMember = async (bot) => {
-  try {
-    bot.hears("/start", async (ctx) => {
+  bot.hears("/start", async (ctx) => {
+    try {
       var userData = await getUserData(ctx.chat);
 
       var db = await dbServices();
@@ -18,11 +18,13 @@ var chatMember = async (bot) => {
       }
 
       await ctx.reply(greetUser(ctx.chat.id, ctx.chat.first_name));
-    });
-  } catch (err) {
-    err.location = "create and send new user data";
-    throw err;
-  }
+    } catch (err) {
+      err.userId = ctx.chat.id;
+      err.location = "create and send new user data";
+
+      throw err;
+    }
+  });
 };
 
 module.exports = { chatMember };

@@ -14,8 +14,8 @@ var getErrorDetail = (err) => {
   return "\n  код: " + code + "\n  текст: " + msg + "\n  место: " + location;
 };
 
-var reportError = async (userId, err) => {
-  var userData = "Ошибка у пользователя: " + userId;
+var reportError = async (err) => {
+  var userData = "Ошибка у пользователя: " + err.userId;
 
   var errDetail = "\n\nОшибка:  " + getErrorDetail(err);
 
@@ -23,7 +23,7 @@ var reportError = async (userId, err) => {
 
   var report = userData + errDetail + errDate;
 
-  logger.error({ userId, err });
+  logger.error({ err });
   return await errorBot.api.sendMessage(env.admin_id_2, report);
 };
 
