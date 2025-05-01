@@ -1,4 +1,3 @@
-var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
 var { reportError } = require("../../bot/errReportBot");
 var validateAuthHeader = require("../services/validateAuthHeader");
@@ -26,14 +25,15 @@ var deleteOrder = async (req, res) => {
     var isOrderDeleted = await db.deleteOrder(userId, orderId);
 
     if (!isOrderDeleted) {
-      await reportError(userId, null, "Запрос на удаление заказа");
       return res.sendStatus(304);
     }
 
     return res.sendStatus(200);
   } catch (err) {
-    await reportError(userId, err, "Запрос на удаление заказа");
-    logger.error({ place: "delete order", userId, err });
+    err.location = "deleteUser controller";
+
+    await reportError(userId, err);
+
     return res.sendStatus(500);
   }
 };

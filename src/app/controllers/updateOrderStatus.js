@@ -1,6 +1,5 @@
 var env = require("../../env");
 var { Bot } = require("grammy");
-var { logger } = require("../../logger");
 var { dbServices } = require("../../database/db");
 var { reportError } = require("../../bot/errReportBot");
 var validateAuthHeader = require("../services/validateAuthHeader");
@@ -40,8 +39,10 @@ var updateOrderStatus = async (req, res) => {
 
     return res.sendStatus(200);
   } catch (err) {
+    err.location = "updateOrderStatus controller";
+
     await reportError(userId, err, "Попытка обновления статуса заказа");
-    logger.error({ place: "patch order status", userId, err });
+
     return res.sendStatus(500);
   }
 };
