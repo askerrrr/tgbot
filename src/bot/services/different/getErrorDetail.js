@@ -1,5 +1,4 @@
-var getErrorDetail = ({ code, path }) => {
-  return "\n\nкод: " + code + "\n\nпуть: " + path;
-};
+var getErrorDetail = ({ code, path }) =>
+  "\n\nкод: " + code + "\n\nпуть: " + path;
 
 module.exports = getErrorDetail;
