@@ -5,21 +5,29 @@ var sendUserDataToServer = require("../../services/different/sendUserDataToServe
 
 var personalAccount = async (bot) => {
   bot.hears("Личный кабинет", async (ctx) => {
-    var db = await dbServices();
+    try {
+      var db = await dbServices();
 
-    var user = await db.getUserById(ctx.chat.id + "");
+      var user = await db.getUserById(ctx.chat.id + "");
 
-    if (!user) {
-      var userData = await getUserData(ctx.chat);
+      if (!user) {
+        var userData = await getUserData(ctx.chat);
 
-      await db.createUser(userData);
+        await db.createUser(userData);
 
-      await sendUserDataToServer(userData);
+        await sendUserDataToServer(userData);
+      }
+
+      await ctx.reply("Личный кабинет", {
+        reply_markup: keyboard.PersonalAccount,
+      });
+    } catch (e) {
+      await ctx.reply(
+        "Что то не могу открыть личный кабинет, попробуйте позже"
+      );
+
+      throw e;
     }
-
-    await await ctx.reply("Личный кабинет", {
-      reply_markup: keyboard.PersonalAccount,
-    });
   });
 };
 

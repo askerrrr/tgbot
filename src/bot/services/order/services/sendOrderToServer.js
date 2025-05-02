@@ -1,10 +1,9 @@
 var env = require("../../../../env");
-var { logger } = require("../../../../logger");
-var { reportError } = require("../../../errReportBot");
+var { NetworkError } = require("../../../customError/index");
 
 var sendOrderToServer = async (order) => {
   try {
-    var response = await fetch(env.bot_api_order, {
+    var res = await fetch(env.bot_api_order, {
       method: "POST",
       body: JSON.stringify(order),
       headers: {
@@ -13,20 +12,17 @@ var sendOrderToServer = async (order) => {
       },
     });
 
-    if (!response.ok) {
-      var err = new Error(response.statusText);
-      err.code = response.status;
-      throw err;
+    if (!res.ok) {
+      throw new NetworkError(order.userId, res.status, "sendOrderToServer");
     }
 
     return true;
-  } catch (err) {
-    logger.error({
-      place: "отправлении заказа на сервер",
-      userId: order.userId,
-      err,
-    });
-    await reportError(order.useId, err, "Ошибка при отправлении заказа");
+  } catch (e) {
+    if (e instanceof NetworkError) {
+      throw e;
+    }
+
+    throw new NetworkError(order.userId, null, "sendOrderToServer", e);
   }
 };
 

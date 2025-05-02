@@ -1,5 +1,6 @@
 var env = require("../env");
 var express = require("express");
+var errorHandler = require("./middleware/errorHandler");
 
 var app = express();
 
@@ -19,3 +20,5 @@ var updateOrderStatus = require("./controllers/updateOrderStatus");
 app.delete("/user", deleteUser);
 app.delete("/order", deleteOrder);
 app.patch("/orderstatus", updateOrderStatus);
+
+app.use(errorHandler);

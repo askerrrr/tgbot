@@ -1,32 +1,20 @@
 var env = require("../env.js");
 var { Bot } = require("grammy");
 var { logger } = require("../logger.js");
-var { errorHandler } = require("./middleware/errorHandler.js");
 var { getDateAndTime } = require("./services/order/services/dateAndTime.js");
 
 var errorBot = new Bot(env.err_bot_token);
 
-var getErrorDetail = (err) => {
-  var code = err?.code ?? "";
-  var msg = err?.message ?? "";
-  var location = err?.location ?? "";
-
-  return "\n  код: " + code + "\n  текст: " + msg + "\n  место: " + location;
-};
-
-var reportError = async (err) => {
-  var userData = "Ошибка у пользователя: " + err.userId;
-
-  var errDetail = "\n\nОшибка:  " + getErrorDetail(err);
+var reportError = async (errDetail, userId) => {
+  var userData = "Пользователь: " + userId;
 
   var errDate = "\n\nВремя ошибки: " + getDateAndTime().fullDateTime();
 
-  var report = userData + errDetail + errDate;
+  var report = userData + errDate + errDetail;
 
-  logger.error({ err });
+  logger.error({ errDetail });
+
   return await errorBot.api.sendMessage(env.admin_id_2, report);
 };
 
 module.exports = { reportError };
-
-errorBot.catch(errorHandler);

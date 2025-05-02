@@ -4,29 +4,41 @@ var getOrdersFromMainServer = require("../../services/different/getOrdersFromMai
 
 var getActiveOrders = async (bot) => {
   bot.hears("Активные заказы", async (ctx) => {
-    var userId = ctx.chat.id + "";
+    try {
+      var userId = ctx.chat.id + "";
 
-    var db = await dbServices();
+      var db = await dbServices();
 
-    var activeOrders = await db.getActiveOrdersFromDB(userId);
+      var activeOrders = await db.getActiveOrdersFromDB(userId);
 
-    if (activeOrders?.length) {
-      for (var order of activeOrders) {
-        await ctx.replyWithHTML(showOrder(order));
-      }
-    } else {
-      var requestedOrders = await getOrdersFromMainServer(userId);
-      var requestedActiveOrders = requestedOrders?.activeOrders || [];
-
-      if (requestedActiveOrders.length) {
-        for (var order of requestedActiveOrders) {
-          await ctx.reply(showOrder(order));
-
-          await db.createOrder(order);
+      if (activeOrders?.length) {
+        for (var order of activeOrders) {
+          await ctx.replyWithHTML(showOrder(order));
         }
+
+        return;
       }
 
-      return await ctx.reply("Активных заказов не найдено");
+      try {
+        var orders = await getOrdersFromMainServer(userId);
+
+        var requestedActiveOrders = orders?.activeOrders || [];
+
+        if (requestedActiveOrders.length) {
+          for (var order of requestedActiveOrders) {
+            await ctx.reply(showOrder(order));
+
+            await db.createOrder(order);
+          }
+
+          return;
+        }
+      } catch (e) {
+        await ctx.reply("Активных заказов не найдено");
+        throw e;
+      }
+    } catch (e) {
+      throw e;
     }
   });
 };

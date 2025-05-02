@@ -1,4 +1,3 @@
-var { reportError } = require("../../../../errReportBot");
 var getFileUrl = require("../../services/getFileURL");
 var checkDocumentExension = require("../../services/checkDocumentExension");
 
@@ -31,8 +30,8 @@ var getFile = async (ctx, conversation) => {
 
     await ctx.reply("Это вообще не документ...");
     return;
-  } catch (err) {
-    await reportError(ctx.chat.id, err, "Заказ товаров, получение эксель");
+  } catch (e) {
+    throw e;
   }
 };
 

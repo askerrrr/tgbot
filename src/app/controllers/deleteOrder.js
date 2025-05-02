@@ -1,15 +1,19 @@
 var { dbServices } = require("../../database/db");
-var { reportError } = require("../../bot/errReportBot");
+var { DeleteOrderError } = require("../customError/index");
 var validateAuthHeader = require("../services/validateAuthHeader");
 
-var deleteOrder = async (req, res) => {
+var deleteOrder = async (req, res, next) => {
   try {
-    var authHeader = req.headers.authorization;
+    var authHeader = req.headers?.authorization;
+
+    if (!authHeader) {
+      return res.sendStatus(401);
+    }
 
     var validAuthHeader = await validateAuthHeader(authHeader);
 
     if (!validAuthHeader) {
-      return res.sendStatus(401);
+      return res.sendStatus(403);
     }
 
     var { userId, orderId } = req.body;
@@ -25,16 +29,12 @@ var deleteOrder = async (req, res) => {
     var isOrderDeleted = await db.deleteOrder(userId, orderId);
 
     if (!isOrderDeleted) {
-      return res.sendStatus(304);
+      throw new DeleteOrderError();
     }
 
     return res.sendStatus(200);
   } catch (err) {
-    err.location = "deleteUser controller";
-
-    await reportError(userId, err);
-
-    return res.sendStatus(500);
+    next(err);
   }
 };
 

@@ -1,15 +1,24 @@
 var env = require("../../../../env");
+var { NetworkError } = require("../../../customError/index");
 
-var getСurrencyValue = async () => {
-  var response = await fetch(env.currency_value);
+var getСurrencyValue = async (userId) => {
+  try {
+    var res = await fetch(env.currency_value);
 
-  if (!response.ok) {
-    throw new Error("Cannot get currency value");
+    if (!res.ok) {
+      throw new NetworkError(userId, res.status, "getСurrencyValue ");
+    }
+
+    var json = await res.json();
+
+    return json.Valute.CNY.Value;
+  } catch (e) {
+    if (e instanceof NetworkError) {
+      throw e;
+    }
+
+    throw new NetworkError(userId, null, "getСurrencyValue", e);
   }
-
-  var json = await response.json();
-
-  return json.Valute.CNY.Value;
 };
 
 module.exports = getСurrencyValue;

@@ -6,12 +6,14 @@ var calcOrderCost = async (conversation, ctx) => {
   var result = await conversation.wait();
 
   var num = +result.msg.text;
+  var userId = ctx.chat.id;
 
   if (num > 0 && num < 1e6) {
-    var result = await convertYuanToRubles(num);
-    await ctx.reply(
-      `Ориентировочная стоимость товара ${result}р \n*без учета стоимости доставки\n\nПодробнее о тарифах доставки можно узнать в разделе "Часто задаваемые вопросы"`
-    );
+    var result = await convertYuanToRubles(num, userId);
+
+    var orderCost = `Ориентировочная стоимость товара ${result}р \n*без учета стоимости доставки\n\nПодробнее о тарифах доставки можно узнать в разделе "Часто задаваемые вопросы"`;
+
+    await ctx.reply(orderCost);
   } else if (num > 1e6) {
     await ctx.reply(
       `Боюсь, что у вас нет таких денег)))\nВведите числовое значение, которое больше 0`

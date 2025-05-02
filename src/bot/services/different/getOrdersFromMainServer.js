@@ -1,11 +1,11 @@
 var env = require("../../../env");
-var { reportError } = require("../../errReportBot");
+var { NetworkError } = require("../../customError/index");
 
 var getOrdersFromMainServer = async (userId) => {
   var url = env.bot_api_orders + userId;
 
   try {
-    var response = await fetch(url, {
+    var res = await fetch(url, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -13,26 +13,23 @@ var getOrdersFromMainServer = async (userId) => {
       },
     });
 
-    if (response.status == 404) {
+    if (!res.ok) {
+      throw new NetworkError(userId, res.status, "getOrdersFromMainServer");
+    }
+
+    if (res.status == 404) {
       return;
     }
 
-    if (!response.ok) {
-      var err = new Error(response.statusText);
-      err.code = response.status;
-      throw err;
+    var data = await res.json();
+
+    return data;
+  } catch (e) {
+    if (e instanceof NetworkError) {
+      throw e;
     }
 
-    var json = await response.json();
-
-    return json;
-  } catch (err) {
-    if (err.message.startsWith("Unexpected token")) {
-      return;
-    }
-
-    await reportError(userId, err, "Запрос на получение заказов");
-    return;
+    throw new NetworkError(userId, null, "getOrdersFromMainServer", e);
   }
 };
 

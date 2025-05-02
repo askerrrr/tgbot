@@ -1,34 +1,45 @@
-var { showOrder } = require("../../services/different/showOrderContent");
 var { dbServices } = require("../../../database/db");
+var { showOrder } = require("../../services/different/showOrderContent");
 var getOrdersFromMainServer = require("../../services/different/getOrdersFromMainServer");
 
 var getCompletedOrders = async (bot) => {
-  bot.hears("Завершенные заказы", async (ctx) => {
-    var userId = ctx.chat.id + "";
+  try {
+    bot.hears("Завершенные заказы", async (ctx) => {
+      var userId = ctx.chat.id + "";
 
-    var db = await dbServices();
+      var db = await dbServices();
 
-    var completedOrders = await db.getCompletedOrdersFromDB(userId);
+      var completedOrders = await db.getCompletedOrdersFromDB(userId);
 
-    if (completedOrders?.length) {
-      for (var order of completedOrders) {
-        await ctx.reply(showOrder(order));
-      }
-    } else {
-      var requestedOrders = await getOrdersFromMainServer(userId);
-
-      var requestedCompletedOrders = requestedOrders?.completedOrders || [];
-
-      if (requestedCompletedOrders.length) {
-        for (var order of requestedCompletedOrders) {
+      if (completedOrders?.length) {
+        for (var order of completedOrders) {
           await ctx.reply(showOrder(order));
-          await db.createOrder(order);
         }
+        return;
       }
 
-      return await ctx.reply("Завершенных заказов не найдено");
-    }
-  });
+      try {
+        var orders = await getOrdersFromMainServer(userId);
+
+        var requestedCompletedOrders = orders?.completedOrders || [];
+
+        if (requestedCompletedOrders.length) {
+          for (var order of requestedCompletedOrders) {
+            await ctx.reply(showOrder(order));
+
+            await db.createOrder(order);
+          }
+
+          return;
+        }
+      } catch (e) {
+        await ctx.reply("Завершенных заказов не найдено");
+        throw e;
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
 };
 
 module.exports = { getCompletedOrders };

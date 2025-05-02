@@ -1,5 +1,3 @@
-var { reportError } = require("../../../../errReportBot");
-
 var getPhone = async (ctx, conversation) => {
   try {
     await ctx.reply(
@@ -16,12 +14,8 @@ var getPhone = async (ctx, conversation) => {
 
       return;
     }
-  } catch (err) {
-    await reportError(
-      ctx.chat.id,
-      err,
-      "Заказ товаров, получение  телефона (multiple)"
-    );
+  } catch (e) {
+    throw e;
   }
 };
 

@@ -1,9 +1,9 @@
 var env = require("../../../env");
-var { reportError } = require("../../errReportBot");
+var { NetworkError } = require("../../customError");
 
 var sendUserDataToServer = async (userData) => {
   try {
-    var response = await fetch(env.bot_api_users, {
+    var res = await fetch(env.bot_api_users, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: {
@@ -12,16 +12,21 @@ var sendUserDataToServer = async (userData) => {
       },
     });
 
-    if (!response.ok) {
-      var err = new Error(response.statusText);
-      err.code = response.status;
+    if (!res.ok) {
+      throw new NetworkError(userData.userId, res.status, "init user");
+    }
 
-      throw err;
+    if (res.status == 409) {
+      return true;
     }
 
     return true;
-  } catch (err) {
-    await reportError(userData.userId, err, "Отправка данных пользователе");
+  } catch (e) {
+    if (e instanceof NetworkError) {
+      throw e;
+    }
+
+    throw new NetworkError(userData.userId, null, "init user", e);
   }
 };
 

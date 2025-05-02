@@ -13,7 +13,7 @@ var { conversations, createConversation } = require("@grammyjs/conversations");
 
 var middlewareForConversations = async (bot) => {
   try {
-    chatMember(bot);
+    await chatMember(bot);
 
     bot.use(session({ initial: () => ({}) }));
     bot.use(conversations());
@@ -22,12 +22,13 @@ var middlewareForConversations = async (bot) => {
     bot.use(createConversation(multiple));
     bot.use(createConversation(calcOrderCost));
 
-    orderCost(bot);
-    orderSingleItems(bot);
-    orderMultipleItems(bot);
+    await orderCost(bot);
+    await orderSingleItems(bot);
+    await orderMultipleItems(bot);
 
-    bot.on("message", catchUnexpectedMessages);
+    await bot.on("message", catchUnexpectedMessages);
   } catch (err) {
+    console.log("err in middleware: ", err.message);
     return await reportError(err);
   }
 };

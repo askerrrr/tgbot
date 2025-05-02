@@ -1,4 +1,3 @@
-var { reportError } = require("../../../../errReportBot");
 var { checkFileExtension } = require("../../services/checkFileExtension");
 
 var getImage = async (ctx, conversation) => {
@@ -24,8 +23,8 @@ var getImage = async (ctx, conversation) => {
     }
 
     return validFile;
-  } catch (err) {
-    await reportError(ctx.chat.id, err, "Заказ товара, получение фото");
+  } catch (e) {
+    throw e;
   }
 };
 

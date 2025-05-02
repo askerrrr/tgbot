@@ -14,8 +14,8 @@ var getPhone = async (ctx, conversation) => {
 
       return;
     }
-  } catch (err) {
-    reportError(ctx.chat.id, err, "Заказ товара, получение телефона (single)");
+  } catch (e) {
+    throw e;
   }
 };
 

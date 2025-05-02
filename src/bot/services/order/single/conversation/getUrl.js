@@ -1,5 +1,4 @@
 var { checkUrl } = require("../../services/checkUrl");
-var { reportError } = require("../../../../errReportBot");
 
 var getUrl = async (ctx, conversation) => {
   try {
@@ -19,8 +18,8 @@ var getUrl = async (ctx, conversation) => {
     }
 
     return validUrl;
-  } catch (err) {
-    await reportError(ctx.chat.id, err, "Заказ товаров, получение ссылки");
+  } catch (e) {
+    throw e;
   }
 };
 

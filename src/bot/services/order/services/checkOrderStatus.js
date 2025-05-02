@@ -12,7 +12,7 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
 
     if (status.msg.text == "Да, все правильно!") {
       var db = await dbServices();
-      
+
       var successfulResponse = await sendOrderToServer(order);
 
       var isOrderAdded = await db.createOrder(order);
@@ -34,10 +34,8 @@ var checkOrderStatus = async (ctx, conversation, order, fileId, orderFunc) => {
 
       return await orderFunc(conversation, ctx);
     }
-  } catch (err) {
-   
-    logger.error({ place: "check order status", userId: order.userId, err });
-    reportError(order.useId, err, "Ошибка при отправлении заказа");
+  } catch (e) {
+    throw e;
   }
 };
 
