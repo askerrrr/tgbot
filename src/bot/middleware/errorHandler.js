@@ -10,10 +10,16 @@ var errorHandler = async (err) => {
 
   if (e instanceof GrammyError) {
     console.error("Error in request:", e.description);
+
+    return await reportError(e, null);
   } else if (e instanceof HttpError) {
     console.error("Could not contact Telegram:", e);
+
+    return await reportError(e, null);
   } else if (e instanceof TypeError) {
     console.error("TypeError:", e);
+
+    return await reportError(e, null);
   } else if (e instanceof NetworkError) {
     var errDetail = getNetworkErrorDetail(e);
 

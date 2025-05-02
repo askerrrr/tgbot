@@ -32,14 +32,16 @@ var updateOrderStatus = async (req, res, next) => {
     );
 
     if (!isStatusUpdated) {
-      throw new OrderStatusUpdateError();
+      throw new OrderStatusUpdateError(userId, orderId);
     }
 
     var statusDescription = getStatusDescription(orderStatus);
 
     var message = `Статус заказа ${orderId} изменен.\nТекущий статус: ${statusDescription}`;
 
-    await bot.api.sendMessage(userId, message).then(() => res.sendStatus(200));
+    await bot.api.sendMessage(userId, message);
+
+    return res.sendStatus(200);
   } catch (err) {
     next(err);
   }

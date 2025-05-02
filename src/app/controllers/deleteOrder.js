@@ -29,7 +29,7 @@ var deleteOrder = async (req, res, next) => {
     var isOrderDeleted = await db.deleteOrder(userId, orderId);
 
     if (!isOrderDeleted) {
-      throw new DeleteOrderError();
+      throw new DeleteOrderError(userId, orderId);
     }
 
     return res.sendStatus(200);

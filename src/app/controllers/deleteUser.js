@@ -9,6 +9,7 @@ var deleteUser = async (req, res, next) => {
     if (!authHeader) {
       return res.sendStatus(401);
     }
+
     var validAuthHeader = await validateAuthHeader(authHeader);
 
     if (!validAuthHeader) {
@@ -28,7 +29,7 @@ var deleteUser = async (req, res, next) => {
     var isUserDeleted = await db.deleteUser(userId);
 
     if (!isUserDeleted) {
-      throw new DeleteUserError();
+      throw new DeleteUserError(userId);
     }
 
     return res.sendStatus(200);

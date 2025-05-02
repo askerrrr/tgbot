@@ -1,28 +1,52 @@
 class OrderStatusUpdateError extends Error {
-  constructor(message) {
+  constructor(userId, orderId, message) {
     super(message);
+
+    this.userId = userId;
+    this.orderId = orderId;
     this.code = 304;
-    this.name = "OrderStatusUpdateError";
     this.message = "Cannot update order status";
   }
 }
 
 class DeleteUserError extends Error {
-  constructor(message) {
+  constructor(userId, message) {
     super(message);
+
+    this.userId = userId;
     this.code = 304;
-    this.name = "DeleteUserError";
     this.message = "Cannot delete user";
   }
 }
 
 class DeleteOrderError extends Error {
-  constructor(message) {
+  constructor(userId, orderId, message) {
     super(message);
+
+    this.userId = userId;
+    this.orderId = orderId;
     this.code = 304;
-    this.name = "DeleteOrderError";
     this.message = "Cannot delete order";
   }
 }
 
-module.exports = { OrderStatusUpdateError, DeleteUserError, DeleteOrderError };
+var getErrorDetail = ({ code, message, stack, orderId = null }) => {
+  var errTitle = "\n\nОшибка приложения:  ";
+  var orderIdPath = "\n\n  orderId: " + orderId;
+  var codePath = "\n\n  code: " + (code ?? 500);
+  var msgPath = "\n\n  msg: " + (message ?? "");
+  var stackPath = "\n\n  stacktrace: " + (stack ?? "");
+
+  if (orderId) {
+    return errTitle + orderIdPath + codePath + msgPath + stackPath;
+  }
+
+  return errTitle + codePath + msgPath + stackPath;
+};
+
+module.exports = {
+  OrderStatusUpdateError,
+  DeleteUserError,
+  DeleteOrderError,
+  getErrorDetail,
+};
