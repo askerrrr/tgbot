@@ -3,7 +3,9 @@ var { InputFile } = require("grammy");
 var getTemplate = async (bot) => {
   bot.hears("Получить шаблон", async (ctx) => {
     try {
-      await ctx.replyWithDocument(new InputFile("src/utils/template.xlsx"));
+      var filePath = "src/bot/utils/template.xlsx";
+
+      await ctx.replyWithDocument(new InputFile(filePath));
     } catch (e) {
       e.userId = ctx.chat.id;
 
@@ -21,4 +23,3 @@ var getTemplate = async (bot) => {
 };
 
 module.exports = { getTemplate };
-
