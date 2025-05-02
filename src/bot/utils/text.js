@@ -32,6 +32,9 @@ const textForFailedAttempt =
 const errNotification =
   "Произошла ошибка при формировании заказа, попробуйте еще раз.\nЯ уже уведомил моего администратора об ошибке";
 
+var noTemplateFileMessage =
+  "По какой-то причине не удалось отправить вам файл.\nЯ уже уведомил моего администратора об этой ошибке";
+
 module.exports = {
   errNotification,
   linkForApp1688,
@@ -44,5 +47,6 @@ module.exports = {
   linkForAppPinduoduo,
   deliveryAddressText,
   textForFailedAttempt,
+  noTemplateFileMessage,
   messageForNonReadyFunctions,
 };

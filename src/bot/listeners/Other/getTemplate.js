@@ -1,4 +1,5 @@
 var { InputFile } = require("grammy");
+var { noTemplateFileMessage } = require("../../utils/text");
 
 var getTemplate = async (bot) => {
   bot.hears("Получить шаблон", async (ctx) => {
@@ -10,9 +11,7 @@ var getTemplate = async (bot) => {
       e.userId = ctx.chat.id;
 
       if (e.code == "ENOENT") {
-        await ctx.reply(
-          "По какой-то причине не удалось отправить вам файл.\nЯ уже уведомил моего администратора об этой ошибке"
-        );
+        await ctx.reply(noTemplateFileMessage);
 
         throw e;
       }
