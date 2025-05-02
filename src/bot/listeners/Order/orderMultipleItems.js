@@ -1,7 +1,6 @@
-var orderMultipleItems = async (bot) => {
-  bot.hears("Заказать несколько товаров", async (ctx) => {
+var orderMultipleItems = async (bot) =>
+  await bot.hears("Заказать несколько товаров", async (ctx) => {
     await ctx.conversation.enter("multiple");
   });
-};
 
 module.exports = { orderMultipleItems };

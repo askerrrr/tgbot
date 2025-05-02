@@ -1,6 +1,6 @@
 var env = require("../../../env");
 
-var getFileId = async (bot) => {
+var getFileId = async (bot) =>
   bot.on("message:photo", async (ctx) => {
     var photo = await ctx.message.photo;
 
@@ -15,6 +15,5 @@ var getFileId = async (bot) => {
 
     return await ctx.reply(fileUrl);
   });
-};
 
 module.exports = { getFileId };

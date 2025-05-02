@@ -7,10 +7,9 @@ var returnOrderToUser = async (ctx, itemUrl, phone, imageId, description) => {
 
   description = checkDescription(description);
 
-  await ctx.reply(`${description}\nТелефон: ${phone}\nСсылка: ${wrappedUrl}`, {
-    parse_mode: "HTML",
-    disable_web_page_preview: true,
-  });
+  var orderData = `${description}\nТелефон: ${phone}\nСсылка: ${wrappedUrl}`;
+
+  await ctx.replyWithHTML(orderData);
 
   await ctx.replyWithPhoto(imageId);
   await ctx.reply(`Все правильно?`, {
