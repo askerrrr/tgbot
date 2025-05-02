@@ -1,20 +1,13 @@
 var getDatabaseErrorDetail = (e) => {
-  var type = e.name;
-  var stack = e.stack;
-  var msg = e.message;
-  var location = e.funcName;
+  var { name, stack, funcName, message } = e;
 
-  return (
-    "\n\nОшибка:  " +
-    "\n\n тип: " +
-    type +
-    "\n\n текст: " +
-    msg +
-    "\n\n место: " +
-    location +
-    "\n\n stacktrace: " +
-    stack
-  );
+  var errTitle = "\n\nОшибка:  ";
+  var errTypePath = "\n\n errType: " + name;
+  var stackPath = "\n\n stack: " + stack;
+  var msgPath = "\n\n msg: " + message;
+  var funcNamePath = "\n\n location: " + funcName;
+
+  return errTitle + errTypePath + funcNamePath + msgPath + stackPath;
 };
 
 module.exports = getDatabaseErrorDetail;

@@ -7,6 +7,7 @@ var getDatabaseErrorDetail = require("../services/different/getDatabaseErrorDeta
 
 var errorHandler = async (err) => {
   var e = err.error;
+  var errDetail;
 
   if (e instanceof GrammyError) {
     console.error("Error in request:", e.description);
@@ -21,15 +22,15 @@ var errorHandler = async (err) => {
 
     return await reportError(e, null);
   } else if (e instanceof NetworkError) {
-    var errDetail = getNetworkErrorDetail(e);
+    errDetail = getNetworkErrorDetail(e);
 
     return await reportError(errDetail, e.userId);
   } else if (e instanceof DatabaseError) {
-    var errDetail = getDatabaseErrorDetail(e);
+    errDetail = getDatabaseErrorDetail(e);
 
     return await reportError(errDetail, e.userId);
   } else if (e instanceof Error) {
-    var errDetail = getErrorDetail(e);
+    errDetail = getErrorDetail(e);
     return await reportError(errDetail, e.userId);
   }
 };

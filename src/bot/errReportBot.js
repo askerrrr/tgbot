@@ -6,11 +6,11 @@ var { getDateAndTime } = require("./services/order/services/dateAndTime.js");
 var errorBot = new Bot(env.err_bot_token);
 
 var reportError = async (errDetail, userId) => {
-  var userData = "Пользователь: " + userId;
+  var errTitle = "Пользователь: " + userId;
 
-  var errDate = "\n\nВремя ошибки: " + getDateAndTime().fullDateTime();
+  var date = "\n\nВремя ошибки: " + getDateAndTime().fullDateTime();
 
-  var report = userData + errDate + errDetail;
+  var report = errTitle + date + errDetail;
 
   logger.error({ errDetail });
 

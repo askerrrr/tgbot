@@ -1,25 +1,22 @@
 var getNetworkErrorDetail = (e) => {
-  var type = e.name;
-  var stack = e.stack;
-  var cause = e.cause;
-  var msg = e?.message ?? "";
-  var location = e?.location ?? "";
-  var code = e?.code ?? cause.code ?? "Отсутствует";
+  var { name, stack, cause, code, message, location } = e;
+
+  var errTitle = "\n\nОшибка:  ";
+  var errNamePath = "\n\n errName: " + name;
+  var stackPath = "\n\n stack: " + stack;
+  var causePath = "\n\n cause: " + (cause ?? "");
+  var msgPath = "\n\n msg: " + message;
+  var locationPath = "\n\n location: " + location;
+  var codePath = "\n\n code: " + (code || cause.code || "");
 
   return (
-    "\n\nОшибка:  " +
-    "\n\n тип: " +
-    type +
-    "\n\n код: " +
-    code +
-    "\n\n текст: " +
-    msg +
-    "\n\n место: " +
-    location +
-    "\n\n причина: " +
-    cause +
-    "\n\n stacktrace: " +
-    stack
+    errTitle +
+    errNamePath +
+    codePath +
+    msgPath +
+    locationPath +
+    causePath +
+    stackPath
   );
 };
 
