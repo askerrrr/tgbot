@@ -1,5 +1,6 @@
 var { dbServices } = require("../../../database/db");
 var { keyboard } = require("../../keyboard/keyboard");
+var { cabinetOpenErrorMessage } = require("../../utils/text");
 var getUserData = require("../../services/different/getUserData");
 var sendUserDataToServer = require("../../services/different/sendUserDataToServer");
 
@@ -22,9 +23,7 @@ var personalAccount = async (bot) => {
         reply_markup: keyboard.PersonalAccount,
       });
     } catch (e) {
-      await ctx.reply(
-        "Что то не могу открыть личный кабинет, попробуйте позже"
-      );
+      await ctx.reply(cabinetOpenErrorMessage);
 
       throw e;
     }

@@ -35,6 +35,9 @@ const errNotification =
 var noTemplateFileMessage =
   "По какой-то причине не удалось отправить вам файл.\nЯ уже уведомил моего администратора об этой ошибке";
 
+var cabinetOpenErrorMessage =
+  "Что то не могу открыть личный кабинет, попробуйте позже";
+
 module.exports = {
   errNotification,
   linkForApp1688,
@@ -48,5 +51,6 @@ module.exports = {
   deliveryAddressText,
   textForFailedAttempt,
   noTemplateFileMessage,
+  cabinetOpenErrorMessage,
   messageForNonReadyFunctions,
 };
