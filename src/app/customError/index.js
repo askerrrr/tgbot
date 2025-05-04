@@ -1,32 +1,16 @@
-class OrderStatusUpdateError extends Error {
-  constructor(userId, orderId, message) {
+class AppError extends Error {
+  constructor(userId, orderId, { cause, message, origin }) {
     super(message);
 
     this.userId = userId;
-    this.orderId = orderId;
-    this.code = 304;
-    this.message = "Cannot update order status";
-  }
-}
 
-class DeleteUserError extends Error {
-  constructor(userId, message) {
-    super(message);
+    this.orderId = orderId ?? "";
 
-    this.userId = userId;
-    this.code = 304;
-    this.message = "Cannot delete user";
-  }
-}
+    this.origin = origin;
 
-class DeleteOrderError extends Error {
-  constructor(userId, orderId, message) {
-    super(message);
+    this.code = cause?.code ?? "";
 
-    this.userId = userId;
-    this.orderId = orderId;
-    this.code = 304;
-    this.message = "Cannot delete order";
+    this.message = message ?? "";
   }
 }
 
@@ -45,8 +29,6 @@ var getErrorDetail = ({ code, message, stack, orderId = null }) => {
 };
 
 module.exports = {
-  OrderStatusUpdateError,
-  DeleteUserError,
-  DeleteOrderError,
+  AppError,
   getErrorDetail,
 };

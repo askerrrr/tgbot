@@ -1,30 +1,30 @@
 var env = require("../../env");
 var { Bot } = require("grammy");
 var { dbServices } = require("../../database/db");
-var { OrderStatusUpdateError } = require("../customError/index");
+var { AppError } = require("../customError/index");
 var validateAuthHeader = require("../services/validateAuthHeader");
 var getStatusDescription = require("../../bot/services/different/getStatusDescription");
 
 var bot = new Bot(env.main_bot_token);
 
 var updateOrderStatus = async (req, res, next) => {
+  var authHeader = req.headers?.authorization;
+
+  if (!authHeader) {
+    return res.sendStatus(401);
+  }
+
+  var validAuthHeader = await validateAuthHeader(authHeader);
+
+  if (!validAuthHeader) {
+    return res.sendStatus(403);
+  }
+
+  var db = await dbServices();
+
+  var { userId, orderId, orderStatus } = req.body;
+
   try {
-    var authHeader = req.headers?.authorization;
-
-    if (!authHeader) {
-      return res.sendStatus(401);
-    }
-
-    var validAuthHeader = await validateAuthHeader(authHeader);
-
-    if (!validAuthHeader) {
-      return res.sendStatus(403);
-    }
-
-    var db = await dbServices();
-
-    var { userId, orderId, orderStatus } = req.body;
-
     var isStatusUpdated = await db.updateOrderStatus(
       userId,
       orderId,
@@ -32,7 +32,7 @@ var updateOrderStatus = async (req, res, next) => {
     );
 
     if (!isStatusUpdated) {
-      throw new OrderStatusUpdateError(userId, orderId);
+      throw new AppError(userId, orderId);
     }
 
     var statusDescription = getStatusDescription(orderStatus);
@@ -42,8 +42,13 @@ var updateOrderStatus = async (req, res, next) => {
     await bot.api.sendMessage(userId, message);
 
     return res.sendStatus(200);
-  } catch (err) {
-    next(err);
+  } catch (e) {
+    e.origin = updateOrderStatus.name;
+    if (e instanceof AppError) {
+      next(e);
+    }
+
+    next(new AppError(userId, orderId, e));
   }
 };
 
