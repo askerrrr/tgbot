@@ -26,6 +26,7 @@ var errorHandler = async (err) => {
     return await reportError(errDetail, e.userId);
   } else if (e instanceof Error) {
     errDetail = getErrorDetail(e);
+
     return await reportError(errDetail, e.userId);
   }
 };

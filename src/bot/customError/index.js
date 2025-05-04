@@ -35,7 +35,3 @@ class DatabaseError extends Error {
 }
 
 module.exports = { NetworkError, DatabaseError };
-
-var customError = { NetworkError, DatabaseError };
-
-module.exports = customError;
