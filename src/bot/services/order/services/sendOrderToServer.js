@@ -13,16 +13,18 @@ var sendOrderToServer = async (order) => {
     });
 
     if (!res.ok) {
-      throw new NetworkError(order.userId, res.status, "sendOrderToServer");
+      throw new NetworkError(order.userId, res.status);
     }
 
     return true;
   } catch (e) {
+    e.origin = sendOrderToServer.name;
+
     if (e instanceof NetworkError) {
       throw e;
     }
 
-    throw new NetworkError(order.userId, null, "sendOrderToServer", e);
+    throw new NetworkError(order.userId, null, e);
   }
 };
 

@@ -6,18 +6,20 @@ var getСurrencyValue = async (userId) => {
     var res = await fetch(env.currency_value);
 
     if (!res.ok) {
-      throw new NetworkError(userId, res.status, "getСurrencyValue ");
+      throw new NetworkError(userId, res.status);
     }
 
     var json = await res.json();
 
     return json.Valute.CNY.Value;
   } catch (e) {
+    e.origin = getСurrencyValue.name;
+
     if (e instanceof NetworkError) {
       throw e;
     }
 
-    throw new NetworkError(userId, null, "getСurrencyValue", e);
+    throw new NetworkError(userId, null, e);
   }
 };
 

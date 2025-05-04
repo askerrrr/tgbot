@@ -13,7 +13,7 @@ var sendUserDataToServer = async (userData) => {
     });
 
     if (!res.ok) {
-      throw new NetworkError(userData.userId, res.status, "init user");
+      throw new NetworkError(userData.userId, res.status);
     }
 
     if (res.status == 409) {
@@ -22,11 +22,13 @@ var sendUserDataToServer = async (userData) => {
 
     return true;
   } catch (e) {
+    e.origin = sendUserDataToServer.name;
+
     if (e instanceof NetworkError) {
       throw e;
     }
 
-    throw new NetworkError(userData.userId, null, "init user", e);
+    throw new NetworkError(userData.userId, null, e);
   }
 };
 
