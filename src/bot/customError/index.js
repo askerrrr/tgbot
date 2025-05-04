@@ -8,9 +8,9 @@ class NetworkError extends Error {
 
     this.code = code ?? cause?.code ?? "";
 
-    this.name = "NetworkError";
-
     this.origin = origin;
+
+    this.name = "NetworkError";
 
     this.message = message ?? `Request failed with status ${this.code}`;
   }
@@ -22,16 +22,20 @@ class DatabaseError extends Error {
 
     this.userId = userId;
 
-    this.message = message;
-
     this.cause = cause;
 
-    this.code = cause?.code;
+    this.code = cause?.code ?? "";
 
     this.origin = origin;
 
     this.name = "DatabaseError";
+
+    this.message = message ?? "";
   }
 }
 
 module.exports = { NetworkError, DatabaseError };
+
+var customError = { NetworkError, DatabaseError };
+
+module.exports = customError;

@@ -1,9 +1,8 @@
+var customError = require("../customError");
 var { reportError } = require("../errReportBot");
 var { GrammyError, HttpError } = require("grammy");
-var { NetworkError, DatabaseError } = require("../customError");
 var getErrorDetail = require("../services/different/getErrorDetail");
-var getNetworkErrorDetail = require("../services/different/getNetworkErrorDetail");
-var getDatabaseErrorDetail = require("../services/different/getDatabaseErrorDetail");
+var getCustomErrorDetail = require("../services/different/getCustomErrorDetail");
 
 var errorHandler = async (err) => {
   var e = err.error;
@@ -21,12 +20,8 @@ var errorHandler = async (err) => {
     console.error("TypeError:", e);
 
     return await reportError(e, null);
-  } else if (e instanceof NetworkError) {
-    errDetail = getNetworkErrorDetail(e);
-
-    return await reportError(errDetail, e.userId);
-  } else if (e instanceof DatabaseError) {
-    errDetail = getDatabaseErrorDetail(e);
+  } else if (e instanceof customError[e]) {
+    errDetail = getCustomErrorDetail(e);
 
     return await reportError(errDetail, e.userId);
   } else if (e instanceof Error) {
