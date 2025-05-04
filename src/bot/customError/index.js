@@ -17,12 +17,16 @@ class NetworkError extends Error {
 }
 
 class DatabaseError extends Error {
-  constructor(userId, { message, origin }) {
+  constructor(userId, { message, cause, origin }) {
     super(message);
 
     this.userId = userId;
 
     this.message = message;
+
+    this.cause = cause;
+
+    this.code = cause?.code;
 
     this.origin = origin;
 

@@ -11,7 +11,9 @@ async function deleteOrder(collection, userId, orderId) {
 
     return result.modifiedCount;
   } catch (e) {
-    throw new DatabaseError(userId, "deleteOrder", e.message);
+    e.origin = deleteOrder.name;
+
+    throw new DatabaseError(userId, e);
   }
 }
 

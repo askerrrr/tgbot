@@ -25,7 +25,9 @@ async function createOrder(collection, orderData) {
 
     return result.modifiedCount;
   } catch (e) {
-    throw new DatabaseError(orderData.userId, "createOrder", e.message);
+    e.origin = createOrder.name;
+
+    throw new DatabaseError(orderData.userId, e);
   }
 }
 

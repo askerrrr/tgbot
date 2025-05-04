@@ -4,7 +4,9 @@ var getUserById = async (collection, userId) => {
   try {
     return await collection.findOne({ userId });
   } catch (e) {
-    throw new DatabaseError(userId, "getUserById", e.message);
+    e.origin = getUserById.name;
+
+    throw new DatabaseError(userId, e);
   }
 };
 module.exports = getUserById;

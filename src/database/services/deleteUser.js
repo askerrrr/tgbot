@@ -6,7 +6,9 @@ async function deleteUser(collection, userId) {
 
     return result.deletedCount;
   } catch (e) {
-    throw new DatabaseError(userId, "deleteUser", e.message);
+    e.origin = deleteUser.name;
+
+    throw new DatabaseError(userId, e);
   }
 }
 

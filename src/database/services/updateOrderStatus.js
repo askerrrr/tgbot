@@ -11,7 +11,9 @@ async function updateOrderStatus(collection, userId, orderId, newStatus) {
 
     return result.modifiedCount;
   } catch (e) {
-    throw new DatabaseError(userId, "updateOrderStatus", e.message);
+    e.origin = updateOrderStatus.name;
+
+    throw new DatabaseError(userId, e);
   }
 }
 

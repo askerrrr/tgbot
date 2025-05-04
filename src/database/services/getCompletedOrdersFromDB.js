@@ -10,7 +10,9 @@ async function getCompletedOrdersFromDB(collection, userId) {
 
     return completedOrders;
   } catch (e) {
-    throw new DatabaseError(userId, "getCompletedOrdersFromDB", e.message);
+    e.origin = getCompletedOrdersFromDB.name;
+
+    throw new DatabaseError(userId, e);
   }
 }
 
