@@ -19,27 +19,21 @@ var getCompletedOrders = async (bot) => {
         return;
       }
 
-      try {
-        var orders = await getOrdersFromMainServer(userId);
+      var orders = await getOrdersFromMainServer(userId);
 
-        var requestedCompletedOrders = orders?.completedOrders || [];
+      var requestedCompletedOrders = orders?.completedOrders || [];
 
-        if (requestedCompletedOrders.length) {
-          for (var order of requestedCompletedOrders) {
-            await ctx.replyWithHTML(showOrder(order));
+      if (requestedCompletedOrders.length) {
+        for (var order of requestedCompletedOrders) {
+          await ctx.replyWithHTML(showOrder(order));
 
-            await db.createOrder(order);
-          }
-
-          return;
+          await db.createOrder(order);
         }
 
-        return await ctx.reply("Завершенных заказов не найдено");
-      } catch (e) {
-        await ctx.reply("Завершенных заказов не найдено");
-
-        throw e;
+        return;
       }
+
+      return await ctx.reply("Завершенных заказов не найдено");
     } catch (e) {
       await ctx.reply(
         "Произошла ошибка при получении завершенных заказов, попробуйте позже..."

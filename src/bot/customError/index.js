@@ -1,18 +1,18 @@
 class NetworkError extends Error {
-  constructor(userId, code, err) {
+  constructor(userId, code, { message, origin, cause }) {
     super(message);
 
     this.userId = userId;
 
-    this.cause = err?.cause;
+    this.cause = cause;
 
     this.code = code ?? cause?.code ?? "";
 
-    this.origin = err?.origin;
+    this.origin = origin;
 
     this.name = this.constructor.name;
 
-    this.message = err?.message ?? `Request failed with status ${this.code}`;
+    this.message = message ?? `Request failed with status ${this.code}`;
   }
 }
 

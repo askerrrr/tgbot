@@ -19,27 +19,21 @@ var getActiveOrders = async (bot) => {
         return;
       }
 
-      try {
-        var orders = await getOrdersFromMainServer(userId);
+      var orders = await getOrdersFromMainServer(userId);
 
-        var requestedActiveOrders = orders?.activeOrders || [];
+      var requestedActiveOrders = orders?.activeOrders || [];
 
-        if (requestedActiveOrders.length) {
-          for (var order of requestedActiveOrders) {
-            await ctx.replyWithHTML(showOrder(order));
+      if (requestedActiveOrders.length) {
+        for (var order of requestedActiveOrders) {
+          await ctx.replyWithHTML(showOrder(order));
 
-            await db.createOrder(order);
-          }
-
-          return;
+          await db.createOrder(order);
         }
 
-        return await ctx.reply("Активных заказов не найдено");
-      } catch (e) {
-        await ctx.reply("Активных заказов не найдено");
-
-        throw e;
+        return;
       }
+
+      return await ctx.reply("Активных заказов не найдено");
     } catch (e) {
       await ctx.reply(
         "Произошла ошибка при получении активных заказов, попробуйте позже..."
