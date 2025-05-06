@@ -44,8 +44,9 @@ var updateOrderStatus = async (req, res, next) => {
     return res.sendStatus(200);
   } catch (e) {
     e.origin = updateOrderStatus.name;
+
     if (e instanceof AppError) {
-      next(e);
+      return next(e);
     }
 
     next(new AppError(userId, orderId, e));

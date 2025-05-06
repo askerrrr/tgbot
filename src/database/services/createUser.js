@@ -20,7 +20,7 @@ async function createUser(collection, { userId, passwd, firstName, userName }) {
   } catch (e) {
     e.origin = createUser.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(ue, userId);
   }
 }
 

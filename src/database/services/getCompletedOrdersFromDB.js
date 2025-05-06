@@ -12,7 +12,7 @@ async function getCompletedOrdersFromDB(collection, userId) {
   } catch (e) {
     e.origin = getCompletedOrdersFromDB.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId);
   }
 }
 

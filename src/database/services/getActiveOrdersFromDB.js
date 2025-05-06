@@ -12,7 +12,7 @@ async function getActiveOrdersFromDB(collection, userId) {
   } catch (e) {
     e.origin = getActiveOrdersFromDB.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId);
   }
 }
 

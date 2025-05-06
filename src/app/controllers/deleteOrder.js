@@ -37,7 +37,7 @@ var deleteOrder = async (req, res, next) => {
     e.origin = deleteOrder.name;
 
     if (e instanceof AppError) {
-      next(e);
+      return next(e);
     }
 
     next(new AppError(userId, orderId, e));

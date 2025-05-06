@@ -1,26 +1,28 @@
 class NetworkError extends Error {
-  constructor(userId, code, { message, cause, origin }) {
+  constructor(userId, code, err) {
     super(message);
 
     this.userId = userId;
 
-    this.cause = cause;
+    this.cause = err?.cause;
 
     this.code = code ?? cause?.code ?? "";
 
-    this.origin = origin;
+    this.origin = err?.origin;
 
-    this.name = "NetworkError";
+    this.name = this.constructor.name;
 
-    this.message = message ?? `Request failed with status ${this.code}`;
+    this.message = err?.message ?? `Request failed with status ${this.code}`;
   }
 }
 
 class DatabaseError extends Error {
-  constructor(userId, { message, cause, origin }) {
+  constructor({ message, cause, origin }, userId, orderId) {
     super(message);
 
     this.userId = userId;
+
+    this.orderId = orderId ?? "";
 
     this.cause = cause;
 
@@ -28,10 +30,11 @@ class DatabaseError extends Error {
 
     this.origin = origin;
 
-    this.name = "DatabaseError";
-
     this.message = message ?? "";
+
+    this.name = this.constructor.name;
   }
 }
+var customError = [NetworkError, DatabaseError];
 
-module.exports = { NetworkError, DatabaseError };
+module.exports = { NetworkError, DatabaseError, customError };

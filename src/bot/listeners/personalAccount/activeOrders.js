@@ -26,18 +26,25 @@ var getActiveOrders = async (bot) => {
 
         if (requestedActiveOrders.length) {
           for (var order of requestedActiveOrders) {
-            await ctx.reply(showOrder(order));
+            await ctx.replyWithHTML(showOrder(order));
 
             await db.createOrder(order);
           }
 
           return;
         }
+
+        return await ctx.reply("Активных заказов не найдено");
       } catch (e) {
         await ctx.reply("Активных заказов не найдено");
+
         throw e;
       }
     } catch (e) {
+      await ctx.reply(
+        "Произошла ошибка при получении активных заказов, попробуйте позже..."
+      );
+
       throw e;
     }
   });

@@ -13,7 +13,7 @@ async function updateOrderStatus(collection, userId, orderId, newStatus) {
   } catch (e) {
     e.origin = updateOrderStatus.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId, orderId);
   }
 }
 

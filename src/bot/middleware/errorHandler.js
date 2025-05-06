@@ -1,6 +1,6 @@
-var customError = require("../customError");
 var { reportError } = require("../errReportBot");
 var { GrammyError, HttpError } = require("grammy");
+var { customError } = require("../customError/index");
 var getErrorDetail = require("../services/different/getErrorDetail");
 var getCustomErrorDetail = require("../services/different/getCustomErrorDetail");
 
@@ -20,7 +20,7 @@ var errorHandler = async (err) => {
     console.error("TypeError:", e);
 
     return await reportError(e, null);
-  } else if (e instanceof customError[e]) {
+  } else if (customError.some((err) => e instanceof err)) {
     errDetail = getCustomErrorDetail(e);
 
     return await reportError(errDetail, e.userId);

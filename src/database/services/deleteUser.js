@@ -8,7 +8,7 @@ async function deleteUser(collection, userId) {
   } catch (e) {
     e.origin = deleteUser.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId);
   }
 }
 

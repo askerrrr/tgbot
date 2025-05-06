@@ -10,7 +10,7 @@ async function checkOrderExists(collection, userId, orderId) {
   } catch (e) {
     e.origin = checkOrderExists.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId, orderId);
   }
 }
 

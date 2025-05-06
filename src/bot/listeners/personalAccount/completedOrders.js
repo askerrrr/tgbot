@@ -3,8 +3,8 @@ var { showOrder } = require("../../services/different/showOrderContent");
 var getOrdersFromMainServer = require("../../services/different/getOrdersFromMainServer");
 
 var getCompletedOrders = async (bot) => {
-  try {
-    bot.hears("Завершенные заказы", async (ctx) => {
+  bot.hears("Завершенные заказы", async (ctx) => {
+    try {
       var userId = ctx.chat.id + "";
 
       var db = await dbServices();
@@ -13,8 +13,9 @@ var getCompletedOrders = async (bot) => {
 
       if (completedOrders?.length) {
         for (var order of completedOrders) {
-          await ctx.reply(showOrder(order));
+          await ctx.replyWithHTML(showOrder(order));
         }
+
         return;
       }
 
@@ -25,21 +26,28 @@ var getCompletedOrders = async (bot) => {
 
         if (requestedCompletedOrders.length) {
           for (var order of requestedCompletedOrders) {
-            await ctx.reply(showOrder(order));
+            await ctx.replyWithHTML(showOrder(order));
 
             await db.createOrder(order);
           }
 
           return;
         }
+
+        return await ctx.reply("Завершенных заказов не найдено");
       } catch (e) {
         await ctx.reply("Завершенных заказов не найдено");
+
         throw e;
       }
-    });
-  } catch (e) {
-    throw e;
-  }
+    } catch (e) {
+      await ctx.reply(
+        "Произошла ошибка при получении завершенных заказов, попробуйте позже..."
+      );
+
+      throw e;
+    }
+  });
 };
 
 module.exports = { getCompletedOrders };

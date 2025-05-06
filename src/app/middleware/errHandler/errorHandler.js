@@ -8,7 +8,7 @@ var errorHandler = async (e, req, res, next) => {
   if (e instanceof AppError) {
     errDetail = getErrorDetail(e);
 
-    await reportError(errDetail, e.userId);
+   // await reportError(errDetail, e.userId);
 
     return res.sendStatus(500);
   } else {

@@ -6,7 +6,7 @@ var getUserById = async (collection, userId) => {
   } catch (e) {
     e.origin = getUserById.name;
 
-    throw new DatabaseError(userId, e);
+    throw new DatabaseError(e, userId);
   }
 };
 module.exports = getUserById;

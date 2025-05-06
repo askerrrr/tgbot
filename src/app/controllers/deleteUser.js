@@ -37,7 +37,7 @@ var deleteUser = async (req, res, next) => {
     e.origin = deleteUser.name;
 
     if (e instanceof AppError) {
-      next(e);
+      return next(e);
     }
 
     next(new AppError(userId, null, e));

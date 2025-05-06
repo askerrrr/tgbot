@@ -1,16 +1,16 @@
 class AppError extends Error {
-  constructor(userId, orderId, { cause, message, origin }) {
+  constructor(userId, orderId, err, message) {
     super(message);
 
     this.userId = userId;
 
     this.orderId = orderId ?? "";
 
-    this.origin = origin;
+    this.origin = err?.origin ?? "";
 
-    this.code = cause?.code ?? "";
+    this.code = err?.cause?.code ?? "";
 
-    this.message = message ?? "";
+    this.message = err?.message ?? "";
   }
 }
 
