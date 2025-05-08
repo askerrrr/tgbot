@@ -18,7 +18,7 @@ var getOrdersFromMainServer = async (userId) => {
     }
 
     if (!res.ok) {
-      throw new NetworkError(userId, res.status);
+      throw new NetworkError(userId, res.statusText, res.status);
     }
 
     var data = await res.json();
@@ -31,7 +31,7 @@ var getOrdersFromMainServer = async (userId) => {
       throw e;
     }
 
-    throw new NetworkError(userId, null, e);
+    throw new NetworkError(userId, e.message);
   }
 };
 
