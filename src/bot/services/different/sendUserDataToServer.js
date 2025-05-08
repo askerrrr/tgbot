@@ -12,12 +12,12 @@ var sendUserDataToServer = async (userData) => {
       },
     });
 
-    if (!res.ok) {
-      throw new NetworkError(userData.userId, res.status);
-    }
-
     if (res.status == 409) {
       return true;
+    }
+
+    if (!res.ok) {
+      throw new NetworkError(userData.userId, res.statusText, res.status);
     }
 
     return true;
@@ -28,7 +28,7 @@ var sendUserDataToServer = async (userData) => {
       throw e;
     }
 
-    throw new NetworkError(userData.userId, null, e);
+    throw new NetworkError(userData.userId, e.message);
   }
 };
 
