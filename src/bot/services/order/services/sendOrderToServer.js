@@ -13,7 +13,7 @@ var sendOrderToServer = async (order) => {
     });
 
     if (!res.ok) {
-      throw new NetworkError(order.userId, res.status);
+      throw new NetworkError(order.userId, res.statusText, res.status);
     }
 
     return true;
@@ -24,7 +24,7 @@ var sendOrderToServer = async (order) => {
       throw e;
     }
 
-    throw new NetworkError(order.userId, null, e);
+    throw new NetworkError(order.userId, e.message);
   }
 };
 
