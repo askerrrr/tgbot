@@ -6,7 +6,7 @@ var getСurrencyValue = async (userId) => {
     var res = await fetch(env.currency_value);
 
     if (!res.ok) {
-      throw new NetworkError(userId, res.status);
+      throw new NetworkError(userId, res.statusText, res.status);
     }
 
     var json = await res.json();
@@ -19,7 +19,7 @@ var getСurrencyValue = async (userId) => {
       throw e;
     }
 
-    throw new NetworkError(userId, null, e);
+    throw new NetworkError(userId, e.message);
   }
 };
 
