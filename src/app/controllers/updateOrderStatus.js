@@ -32,7 +32,7 @@ var updateOrderStatus = async (req, res, next) => {
     );
 
     if (!isStatusUpdated) {
-      throw new AppError(userId, orderId);
+      throw new AppError(userId, orderId, "update order status error");
     }
 
     var statusDescription = getStatusDescription(orderStatus);
@@ -49,7 +49,7 @@ var updateOrderStatus = async (req, res, next) => {
       return next(e);
     }
 
-    next(new AppError(userId, orderId, e));
+    next(new AppError(userId, orderId, e.message, e));
   }
 };
 

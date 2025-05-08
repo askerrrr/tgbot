@@ -1,5 +1,5 @@
 class AppError extends Error {
-  constructor(userId, orderId, err, message) {
+  constructor(userId, orderId, message, err) {
     super(message);
 
     this.userId = userId;
@@ -10,7 +10,7 @@ class AppError extends Error {
 
     this.code = err?.cause?.code ?? "";
 
-    this.message = err?.message ?? "";
+    this.message = message ?? err.message ?? "";
   }
 }
 

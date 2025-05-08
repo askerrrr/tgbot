@@ -29,7 +29,7 @@ var deleteUser = async (req, res, next) => {
     var isUserDeleted = await db.deleteUser(userId);
 
     if (!isUserDeleted) {
-      throw new AppError(userId);
+      throw new AppError(userId, null, "delete user error");
     }
 
     return res.sendStatus(200);
@@ -40,7 +40,7 @@ var deleteUser = async (req, res, next) => {
       return next(e);
     }
 
-    next(new AppError(userId, null, e));
+    next(new AppError(userId, null, e.message, e));
   }
 };
 
